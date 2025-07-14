@@ -18,7 +18,7 @@ import {
   supabase
 } from '../lib/supabase';
 import { v4 as uuidv4 } from 'uuid';
-import { useTranslations } from 'next-intl';
+// Removed next-intl import
 
 export default function BudgetDashboard() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -26,7 +26,7 @@ export default function BudgetDashboard() {
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedMonth, setSelectedMonth] = useState(new Date().toISOString().slice(0, 7));
   const { user } = useAuth();
-  const t = useTranslations();
+  // Removed t = useTranslations()
 
   useEffect(() => {
     if (user) {
@@ -128,10 +128,10 @@ export default function BudgetDashboard() {
   };
 
   const tabs = [
-    { id: 'overview', label: t('tabs.overview'), icon: 'ri-dashboard-line' },
-    { id: 'transactions', label: t('tabs.transactions'), icon: 'ri-list-check-line' },
-    { id: 'charts', label: t('tabs.charts'), icon: 'ri-bar-chart-line' },
-    { id: 'budgets', label: t('tabs.budgets'), icon: 'ri-wallet-line' },
+    { id: 'overview', label: 'Overview', icon: 'ri-dashboard-line' },
+    { id: 'transactions', label: 'Transactions', icon: 'ri-list-check-line' },
+    { id: 'charts', label: 'Charts', icon: 'ri-bar-chart-line' },
+    { id: 'budgets', label: 'Budget Limits', icon: 'ri-wallet-line' },
   ];
 
   return (
