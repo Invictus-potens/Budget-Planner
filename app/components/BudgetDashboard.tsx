@@ -84,8 +84,10 @@ export default function BudgetDashboard() {
       ...transaction,
       id: uuidv4(),
     };
+    // Remove 'account' before sending to Supabase
+    const { account, ...transactionToInsert } = newTransaction;
     try {
-      const { error } = await saveTransaction(newTransaction, user.id);
+      const { error } = await saveTransaction(transactionToInsert, user.id);
       if (!error) {
         setTransactions(prev => [...prev, newTransaction]);
       }

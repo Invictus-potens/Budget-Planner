@@ -5,7 +5,7 @@ export interface Transaction {
   category: string;
   description: string;
   date: string;
-  account: string;
+  account?: string;
 }
 
 export interface Category {
