@@ -1,7 +1,8 @@
 'use client';
 
 import { useAuth } from '../contexts/AuthContext';
-import { useRouter, usePathname, useLocale, useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { useRouter, usePathname } from 'next/navigation';
 
 interface Tab {
   id: string;
