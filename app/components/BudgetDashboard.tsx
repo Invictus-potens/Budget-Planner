@@ -42,7 +42,7 @@ export default function BudgetDashboard() {
             filter: `user_id=eq.${user.id}`,
           },
           (payload) => {
-            const newTransaction = payload.new;
+            const newTransaction = payload.new as Transaction;
             setTransactions((prev) => {
               // Avoid duplicates if already present
               if (prev.some(t => t.id === newTransaction.id)) return prev;
@@ -80,7 +80,7 @@ export default function BudgetDashboard() {
 
   const addTransaction = async (transaction: Omit<Transaction, 'id'>) => {
     if (!user) return;
-    const newTransaction = {
+    const newTransaction: Transaction = {
       ...transaction,
       id: uuidv4(),
     };
