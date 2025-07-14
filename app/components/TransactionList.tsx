@@ -53,7 +53,7 @@ export default function TransactionList({ transactions, onDelete, selectedMonth 
       Type: t.type,
       Category: getCategoryInfo(t.category).name,
       Description: t.description,
-      Account: getAccountInfo(t.account).name,
+      Account: getAccountInfo(t.account ?? '').name,
       Amount: t.amount,
     }));
     exportToCSV(exportData, `transactions-${selectedMonth}.csv`);
@@ -139,7 +139,7 @@ export default function TransactionList({ transactions, onDelete, selectedMonth 
         <div className="space-y-3">
           {sortedTransactions.map(transaction => {
             const category = getCategoryInfo(transaction.category);
-            const account = getAccountInfo(transaction.account);
+            const account = getAccountInfo(transaction.account ?? '');
             
             return (
               <div key={transaction.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
