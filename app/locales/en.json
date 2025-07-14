@@ -1,0 +1,9 @@
+{
+  "tabs": {
+    "overview": "Overview",
+    "transactions": "Transactions",
+    "charts": "Charts",
+    "budgets": "Budget Limits"
+  },
+  "signOut": "Sign Out"
+} 

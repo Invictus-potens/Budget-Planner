@@ -1,6 +1,7 @@
 'use client';
 
 import { useAuth } from '../contexts/AuthContext';
+import { useRouter, usePathname, useLocale, useTranslations } from 'next-intl';
 
 interface Tab {
   id: string;
@@ -18,9 +19,18 @@ interface HeaderProps {
 
 export default function Header({ activeTab, setActiveTab, tabs, selectedMonth, setSelectedMonth }: HeaderProps) {
   const { user, signOut } = useAuth();
+  const router = useRouter();
+  const pathname = usePathname();
+  const locale = useLocale();
+  const t = useTranslations();
 
   const handleSignOut = async () => {
     await signOut();
+  };
+
+  const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newLocale = e.target.value;
+    router.replace(pathname, { locale: newLocale });
   };
   return (
     <header className="bg-white/80 backdrop-blur-sm border-b border-purple-100 sticky top-0 z-50">
@@ -43,7 +53,7 @@ export default function Header({ activeTab, setActiveTab, tabs, selectedMonth, s
                   }`}
                 >
                   <i className={`${tab.icon} text-sm`}></i>
-                  <span>{tab.label}</span>
+                  <span>{t(`tabs.${tab.id}`)}</span>
                 </button>
               ))}
             </nav>
@@ -62,13 +72,22 @@ export default function Header({ activeTab, setActiveTab, tabs, selectedMonth, s
             </div>
             
             <div className="flex items-center space-x-2">
+              <select
+                value={locale}
+                onChange={handleLanguageChange}
+                className="text-sm border border-gray-200 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-purple-300"
+                aria-label="Select language"
+              >
+                <option value="pt">Português</option>
+                <option value="en">English</option>
+              </select>
               <span className="text-sm text-gray-600">{user?.email}</span>
               <button
                 onClick={handleSignOut}
                 className="text-sm text-gray-600 hover:text-purple-600 transition-colors duration-200 flex items-center space-x-1"
               >
                 <i className="ri-logout-box-r-line"></i>
-                <span>Sign Out</span>
+                <span>{t('signOut')}</span>
               </button>
             </div>
           </div>
@@ -86,7 +105,7 @@ export default function Header({ activeTab, setActiveTab, tabs, selectedMonth, s
               }`}
             >
               <i className={`${tab.icon} text-xs`}></i>
-              <span>{tab.label}</span>
+              <span>{t(`tabs.${tab.id}`)}</span>
             </button>
           ))}
         </div>

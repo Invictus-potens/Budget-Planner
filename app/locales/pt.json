@@ -1,0 +1,9 @@
+{
+  "tabs": {
+    "overview": "Visão Geral",
+    "transactions": "Transações",
+    "charts": "Gráficos",
+    "budgets": "Limites de Orçamento"
+  },
+  "signOut": "Sair"
+} 
