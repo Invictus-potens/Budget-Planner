@@ -31,7 +31,7 @@ export default function Header({ activeTab, setActiveTab, tabs, selectedMonth, s
 
   const handleLanguageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newLocale = e.target.value;
-    router.replace(pathname, { locale: newLocale });
+    router.replace(`/${newLocale}${pathname.startsWith('/') ? pathname : `/${pathname}`}`);
   };
   return (
     <header className="bg-white/80 backdrop-blur-sm border-b border-purple-100 sticky top-0 z-50">
