@@ -1,0 +1,161 @@
+'use client';
+
+import { useState, useEffect } from 'react';
+import Header from './Header';
+import TransactionForm from './TransactionForm';
+import TransactionList from './TransactionList';
+import CategorySummary from './CategorySummary';
+import MonthlyCharts from './MonthlyCharts';
+import BudgetLimits from './BudgetLimits';
+import { Transaction, BudgetLimit } from '../types/budget';
+import { useAuth } from '../contexts/AuthContext';
+import { 
+  getTransactions, 
+  saveTransaction, 
+  deleteTransaction as deleteTransactionFromDB,
+  getBudgetLimits,
+  saveBudgetLimit
+} from '../lib/supabase';
+import { v4 as uuidv4 } from 'uuid';
+
+export default function BudgetDashboard() {
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [budgetLimits, setBudgetLimits] = useState<BudgetLimit[]>([]);
+  const [activeTab, setActiveTab] = useState('overview');
+  const [selectedMonth, setSelectedMonth] = useState(new Date().toISOString().slice(0, 7));
+  const { user } = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      loadData();
+    }
+  }, [user]);
+
+  const loadData = async () => {
+    if (!user) return;
+    
+    try {
+      const [transactionsData, limitsData] = await Promise.all([
+        getTransactions(user.id),
+        getBudgetLimits(user.id)
+      ]);
+      
+      if (transactionsData.data) {
+        setTransactions(transactionsData.data);
+      }
+      
+      if (limitsData.data) {
+        setBudgetLimits(limitsData.data);
+      }
+    } catch (error) {
+      console.error('Error loading data:', error);
+    }
+  };
+
+  const addTransaction = async (transaction: Omit<Transaction, 'id'>) => {
+    if (!user) return;
+    const newTransaction = {
+      ...transaction,
+      id: uuidv4(),
+    };
+    try {
+      const { error } = await saveTransaction(newTransaction, user.id);
+      if (!error) {
+        setTransactions(prev => [...prev, newTransaction]);
+      }
+    } catch (error) {
+      console.error('Error saving transaction:', error);
+    }
+  };
+
+  const deleteTransaction = async (id: string) => {
+    if (!user) return;
+    
+    try {
+      const { error } = await deleteTransactionFromDB(id, user.id);
+      if (!error) {
+        setTransactions(prev => prev.filter(t => t.id !== id));
+      }
+    } catch (error) {
+      console.error('Error deleting transaction:', error);
+    }
+  };
+
+  const updateBudgetLimit = async (categoryId: string, limit: number) => {
+    if (!user) return;
+    
+    const updatedLimits = budgetLimits.filter(l => l.categoryId !== categoryId);
+    if (limit > 0) {
+      updatedLimits.push({ categoryId, limit });
+    }
+    
+    try {
+      const { error } = await saveBudgetLimit({ categoryId, limit }, user.id);
+      if (!error) {
+        setBudgetLimits(updatedLimits);
+      }
+    } catch (error) {
+      console.error('Error saving budget limit:', error);
+    }
+  };
+
+  const tabs = [
+    { id: 'overview', label: 'Overview', icon: 'ri-dashboard-line' },
+    { id: 'transactions', label: 'Transactions', icon: 'ri-list-check-line' },
+    { id: 'charts', label: 'Charts', icon: 'ri-bar-chart-line' },
+    { id: 'budgets', label: 'Budget Limits', icon: 'ri-wallet-line' },
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50">
+      <Header 
+        activeTab={activeTab} 
+        setActiveTab={setActiveTab} 
+        tabs={tabs}
+        selectedMonth={selectedMonth}
+        setSelectedMonth={setSelectedMonth}
+      />
+      
+      <main className="max-w-7xl mx-auto px-4 py-8">
+        {activeTab === 'overview' && (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-1">
+              <TransactionForm onSubmit={addTransaction} />
+            </div>
+            <div className="lg:col-span-2">
+              <CategorySummary 
+                transactions={transactions} 
+                selectedMonth={selectedMonth}
+                budgetLimits={budgetLimits}
+              />
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'transactions' && (
+          <TransactionList 
+            transactions={transactions} 
+            onDelete={deleteTransaction}
+            selectedMonth={selectedMonth}
+          />
+        )}
+
+        {activeTab === 'charts' && (
+          <MonthlyCharts 
+            transactions={transactions} 
+            selectedMonth={selectedMonth}
+          />
+        )}
+
+        {activeTab === 'budgets' && (
+          <BudgetLimits 
+            budgetLimits={budgetLimits}
+            onUpdate={updateBudgetLimit}
+            transactions={transactions}
+            selectedMonth={selectedMonth}
+          />
+        )}
+      </main>
+    </div>
+  );
+}
