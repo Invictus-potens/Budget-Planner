@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { IncomingForm } from "formidable";
+import { IncomingForm, Files } from "formidable";
 import * as fs from "fs";
 import Tesseract from "tesseract.js";
 
@@ -9,7 +9,7 @@ export const config = {
   },
 };
 
-async function parseForm(req: NextRequest): Promise<{ files: formidable.Files }> {
+async function parseForm(req: NextRequest): Promise<{ files: Files }> {
   return new Promise((resolve, reject) => {
     const form = new IncomingForm({ keepExtensions: true });
     form.parse(req as any, (err, fields, files) => {
