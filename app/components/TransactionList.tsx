@@ -64,41 +64,44 @@ export default function TransactionList({ transactions, onDelete, selectedMonth 
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 space-y-4 sm:space-y-0">
         <h2 className="text-xl font-semibold text-gray-800 flex items-center">
           <i className="ri-list-check-line text-purple-600 mr-2"></i>
-          Transactions ({sortedTransactions.length})
+          Transações ({sortedTransactions.length})
         </h2>
         
         <button
           onClick={handleExport}
           className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm font-medium whitespace-nowrap flex items-center"
           disabled={sortedTransactions.length === 0}
+          title="Exportar transações para CSV"
         >
           <i className="ri-download-line mr-2"></i>
-          Export CSV
+          Exportar CSV
         </button>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Tipo</label>
           <select
             value={filterType}
             onChange={(e) => setFilterType(e.target.value as any)}
             className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+            title="Filtrar por tipo"
           >
-            <option value="all">All Types</option>
-            <option value="income">Income</option>
-            <option value="expense">Expense</option>
+            <option value="all">Todos os Tipos</option>
+            <option value="income">Receita</option>
+            <option value="expense">Despesa</option>
           </select>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Category</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Categoria</label>
           <select
             value={filterCategory}
             onChange={(e) => setFilterCategory(e.target.value)}
             className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+            title="Filtrar por categoria"
           >
-            <option value="all">All Categories</option>
+            <option value="all">Todas as Categorias</option>
             {allCategories.map(cat => (
               <option key={cat.id} value={cat.id}>{cat.name}</option>
             ))}
@@ -106,26 +109,28 @@ export default function TransactionList({ transactions, onDelete, selectedMonth 
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Sort by</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Ordenar por</label>
           <select
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value as any)}
             className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+            title="Ordenar por"
           >
-            <option value="date">Date</option>
-            <option value="amount">Amount</option>
+            <option value="date">Data</option>
+            <option value="amount">Valor</option>
           </select>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Order</label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Ordem</label>
           <select
             value={sortOrder}
             onChange={(e) => setSortOrder(e.target.value as any)}
             className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+            title="Ordem de exibição"
           >
-            <option value="desc">Newest First</option>
-            <option value="asc">Oldest First</option>
+            <option value="desc">Mais Recentes</option>
+            <option value="asc">Mais Antigas</option>
           </select>
         </div>
       </div>
@@ -133,7 +138,7 @@ export default function TransactionList({ transactions, onDelete, selectedMonth 
       {sortedTransactions.length === 0 ? (
         <div className="text-center py-12">
           <i className="ri-file-list-line text-4xl text-gray-300 mb-4"></i>
-          <p className="text-gray-500">No transactions found for the selected filters.</p>
+          <p className="text-gray-500">Nenhuma transação encontrada.</p>
         </div>
       ) : (
         <div className="space-y-3">
@@ -158,7 +163,7 @@ export default function TransactionList({ transactions, onDelete, selectedMonth 
                         {transaction.type}
                       </span>
                     </div>
-                    <p className="text-sm text-gray-600">{transaction.description || 'No description'}</p>
+                    <p className="text-sm text-gray-600">{transaction.description || 'Sem descrição'}</p>
                     <div className="flex items-center space-x-3 text-xs text-gray-500 mt-1">
                       <span className="flex items-center">
                         <i className="ri-calendar-line mr-1"></i>
@@ -183,6 +188,7 @@ export default function TransactionList({ transactions, onDelete, selectedMonth 
                   <button
                     onClick={() => onDelete(transaction.id)}
                     className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
+                    title="Excluir transação"
                   >
                     <i className="ri-delete-bin-line"></i>
                   </button>
