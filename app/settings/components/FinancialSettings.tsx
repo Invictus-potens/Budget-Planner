@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Card } from './Card';
 import { useSettingsStore } from '@/store/settingsStore';
 import { supabase } from '../../lib/supabase';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '../../contexts/AuthContext';
 
 export function FinancialSettings() {
   const { salary, payday, currency, set } = useSettingsStore();
