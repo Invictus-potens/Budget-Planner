@@ -15,6 +15,10 @@ export function FinancialSettings() {
   useEffect(() => {
     const loadSettings = async () => {
       if (!user) return;
+      if (!supabase) {
+        setMessage('Supabase client não inicializado.');
+        return;
+      }
       setLoading(true);
       const { data, error } = await supabase
         .from('user_financial_settings')
@@ -39,6 +43,10 @@ export function FinancialSettings() {
   const handleSave = async () => {
     if (!user) {
       setMessage('Você precisa estar logado.');
+      return;
+    }
+    if (!supabase) {
+      setMessage('Supabase client não inicializado.');
       return;
     }
     setSaving(true);

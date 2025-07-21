@@ -48,6 +48,13 @@ CREATE TABLE IF NOT EXISTS budget_limits (
   UNIQUE(user_id, category_id)
 );
 
+create table if not exists user_financial_settings (
+  user_id uuid primary key references auth.users(id) on delete cascade,
+  salary numeric,
+  payday integer,
+  currency text
+);
+
 -- Create indexes
 CREATE INDEX IF NOT EXISTS idx_transactions_user_id ON transactions(user_id);
 CREATE INDEX IF NOT EXISTS idx_transactions_date ON transactions(date);
