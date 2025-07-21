@@ -1,8 +1,28 @@
+import { Card } from './Card';
+
 export function Preferences() {
   return (
-    <section>
-      <h2 className="text-xl font-bold mb-4">Preferences</h2>
-      <div className="text-gray-500">[Preferences UI coming soon]</div>
-    </section>
+    <Card>
+      <div className="flex items-center gap-2 mb-2">
+        <span className="text-grayDark text-2xl">⚙️</span>
+        <h2 className="text-lg font-semibold text-grayDark">Preferências</h2>
+      </div>
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-grayMedium">Notificações</span>
+        <label className="inline-flex items-center cursor-pointer">
+          <input type="checkbox" className="sr-only peer" />
+          <div className="w-11 h-6 bg-grayLight rounded-full peer peer-checked:bg-blue transition-all shadow-inner"></div>
+          <div className="absolute w-5 h-5 bg-white border border-grayLight rounded-full left-1 top-0.5 peer-checked:translate-x-full peer-checked:border-blue transition-all shadow"></div>
+        </label>
+      </div>
+      <div className="flex items-center justify-between">
+        <span className="text-grayMedium">Tema Escuro</span>
+        <label className="inline-flex items-center cursor-pointer">
+          <input type="checkbox" className="sr-only peer" />
+          <div className="w-11 h-6 bg-grayLight rounded-full peer peer-checked:bg-blue transition-all shadow-inner"></div>
+          <div className="absolute w-5 h-5 bg-white border border-grayLight rounded-full left-1 top-0.5 peer-checked:translate-x-full peer-checked:border-blue transition-all shadow"></div>
+        </label>
+      </div>
+    </Card>
   );
 } 

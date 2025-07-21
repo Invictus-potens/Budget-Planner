@@ -1,24 +1,27 @@
+import { Card } from './Card';
 import { useSettingsStore } from '@/store/settingsStore';
 
 export function QuickActions() {
   const { reset } = useSettingsStore();
 
   function resetData() {
-    if (window.confirm('Are you sure you want to reset all settings?')) {
+    if (window.confirm('Tem certeza que deseja resetar todos os dados?')) {
       reset();
       window.location.reload();
     }
   }
 
   return (
-    <section>
-      <h2 className="text-xl font-bold mb-4">Quick Actions</h2>
-      <button className="btn btn-primary" onClick={() => alert('Settings saved! (MVP: auto-saved)')}>
-        Save Settings
+    <Card className="gap-3">
+      <h2 className="text-lg font-semibold text-green flex items-center gap-2 mb-2">
+        <span className="text-green text-2xl">⚡</span> Ações Rápidas
+      </h2>
+      <button className="w-full bg-green text-white font-semibold py-3 rounded-md shadow hover:bg-green-600 transition">
+        Salvar Configurações
       </button>
-      <button className="btn btn-danger ml-4" onClick={resetData}>
-        Reset Data
+      <button className="w-full bg-red text-white font-semibold py-3 rounded-md shadow hover:bg-red-600 transition">
+        Resetar Dados
       </button>
-    </section>
+    </Card>
   );
 } 

@@ -20,6 +20,7 @@ import {
 } from '../lib/supabase';
 import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/navigation';
+import SettingsPage from '../settings/page';
 // Removed next-intl import
 
 export default function BudgetDashboard() {
@@ -136,26 +137,18 @@ export default function BudgetDashboard() {
     { id: 'charts', label: 'Gráficos', icon: 'ri-bar-chart-line' },
     { id: 'budgets', label: 'Limites de Orçamento', icon: 'ri-wallet-line' },
     { id: 'receipts', label: 'Recibos e Boletos', icon: 'ri-file-list-3-line' },
-    { id: 'settings', label: 'Configurações', icon: 'ri-settings-3-line', path: '/settings' },
+    { id: 'settings', label: 'Configurações', icon: 'ri-settings-3-line' },
   ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50">
       <Header 
         activeTab={activeTab} 
-        setActiveTab={(tabId) => {
-          const tab = tabs.find(t => t.id === tabId);
-          if (tab && tab.path) {
-            router.push(tab.path);
-          } else {
-            setActiveTab(tabId);
-          }
-        }}
+        setActiveTab={setActiveTab}
         tabs={tabs}
         selectedMonth={selectedMonth}
         setSelectedMonth={setSelectedMonth}
       />
-      
       <main className="max-w-7xl mx-auto px-4 py-8">
         {activeTab === 'overview' && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -171,7 +164,6 @@ export default function BudgetDashboard() {
             </div>
           </div>
         )}
-
         {activeTab === 'transactions' && (
           <TransactionList 
             transactions={transactions} 
@@ -179,14 +171,12 @@ export default function BudgetDashboard() {
             selectedMonth={selectedMonth}
           />
         )}
-
         {activeTab === 'charts' && (
           <MonthlyCharts 
             transactions={transactions} 
             selectedMonth={selectedMonth}
           />
         )}
-
         {activeTab === 'budgets' && (
           <BudgetLimits 
             budgetLimits={budgetLimits}
@@ -195,7 +185,6 @@ export default function BudgetDashboard() {
             selectedMonth={selectedMonth}
           />
         )}
-
         {activeTab === 'receipts' && (
           <div className="max-w-3xl mx-auto">
             <h1 className="text-3xl font-bold text-purple-700 mb-6">Recibos & Boletos</h1>
@@ -203,6 +192,9 @@ export default function BudgetDashboard() {
               <ReceiptsUpload />
             </div>
           </div>
+        )}
+        {activeTab === 'settings' && (
+          <SettingsPage />
         )}
       </main>
     </div>
