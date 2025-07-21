@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import Tesseract from "tesseract.js";
-import path from "path";
+import { createWorker } from "tesseract.js";
 
 export const runtime = "nodejs";
 
@@ -18,15 +17,10 @@ export async function POST(req: NextRequest) {
       console.log(`[UPLOAD] Processing file: ${fileName}`);
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
-      // Use Node.js worker for Tesseract.js
-      const workerPath = path.join(process.cwd(), "node_modules", "tesseract.js", "dist", "node", "worker.js");
-      const langPath = path.join(process.cwd(), "node_modules", "tesseract.js", "dist", "lang");
-      const corePath = path.join(process.cwd(), "node_modules", "tesseract.js", "dist", "node", "tesseract-core.wasm.js");
-      const { data } = await Tesseract.recognize(buffer, "por", {
-        workerPath,
-        langPath,
-        corePath
-      });
+      // Create a new worker for each file (or reuse for multiple files for better perf)
+      const worker = await createWorker('por');
+      const { data } = await worker.recognize(buffer);
+      await worker.terminate();
       const text = data.text;
       console.log(`[UPLOAD] OCR complete for file: ${fileName}`);
       // Regexes básicas para MVP
