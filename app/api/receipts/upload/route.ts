@@ -32,7 +32,11 @@ export async function POST(req: NextRequest) {
         console.error(`[UPLOAD] OCR service failed for file: ${fileName}. Status: ${ocrRes.status}. Response: ${errorText}`);
         throw new Error(`OCR service failed for file: ${fileName}. Status: ${ocrRes.status}. Response: ${errorText}`);
       }
-      const ocrData = await ocrRes.json();
+      const ocrData = await ocrRes.json() as { text?: string };
+      if (!ocrData.text) {
+        console.error(`[UPLOAD] OCR service response missing 'text' property for file: ${fileName}. Response:`, ocrData);
+        throw new Error(`OCR service response missing 'text' property for file: ${fileName}.`);
+      }
       const text = ocrData.text;
       console.log(`[UPLOAD] OCR complete for file: ${fileName}`);
       // Regexes básicas para MVP
