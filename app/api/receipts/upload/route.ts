@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import FormData from 'form-data';
+import fetch from 'node-fetch';
 
 export const runtime = "nodejs";
 
@@ -17,12 +19,13 @@ export async function POST(req: NextRequest) {
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
 
-      // Send file to external Tesseract OCR service
+      // Use form-data package for Node.js
       const ocrForm = new FormData();
-      ocrForm.append('file', new Blob([buffer]), fileName);
+      ocrForm.append('file', buffer, fileName);
       const ocrRes = await fetch('https://tesseract-production-6d57.up.railway.app/ocr', {
         method: 'POST',
         body: ocrForm,
+        headers: ocrForm.getHeaders(),
       });
       if (!ocrRes.ok) {
         const errorText = await ocrRes.text();
