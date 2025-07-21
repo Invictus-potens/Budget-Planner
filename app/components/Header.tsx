@@ -8,6 +8,7 @@ interface Tab {
   id: string;
   label: string;
   icon: string;
+  path?: string; // Added path property
 }
 
 interface HeaderProps {
@@ -38,18 +39,33 @@ export default function Header({ activeTab, setActiveTab, tabs, selectedMonth, s
             
             <nav className="hidden md:flex space-x-1">
               {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 flex items-center space-x-2 ${
-                    activeTab === tab.id
-                      ? 'bg-purple-100 text-purple-700 shadow-sm'
-                      : 'text-gray-600 hover:text-purple-600 hover:bg-purple-50'
-                  }`}
-                >
-                  <i className={`${tab.icon} text-sm`}></i>
-                  <span>{tab.label}</span>
-                </button>
+                tab.path ? (
+                  <Link
+                    key={tab.id}
+                    href={tab.path}
+                    className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 flex items-center space-x-2 ${
+                      activeTab === tab.id || (typeof window !== 'undefined' && window.location.pathname === tab.path)
+                        ? 'bg-purple-100 text-purple-700 shadow-sm'
+                        : 'text-gray-600 hover:text-purple-600 hover:bg-purple-50'
+                    }`}
+                  >
+                    <i className={`${tab.icon} text-sm`}></i>
+                    <span>{tab.label}</span>
+                  </Link>
+                ) : (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 flex items-center space-x-2 ${
+                      activeTab === tab.id
+                        ? 'bg-purple-100 text-purple-700 shadow-sm'
+                        : 'text-gray-600 hover:text-purple-600 hover:bg-purple-50'
+                    }`}
+                  >
+                    <i className={`${tab.icon} text-sm`}></i>
+                    <span>{tab.label}</span>
+                  </button>
+                )
               ))}
             </nav>
           </div>

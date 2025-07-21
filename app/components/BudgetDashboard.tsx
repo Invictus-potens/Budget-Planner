@@ -19,6 +19,7 @@ import {
   supabase
 } from '../lib/supabase';
 import { v4 as uuidv4 } from 'uuid';
+import { useRouter } from 'next/navigation';
 // Removed next-intl import
 
 export default function BudgetDashboard() {
@@ -28,6 +29,7 @@ export default function BudgetDashboard() {
   const [selectedMonth, setSelectedMonth] = useState(new Date().toISOString().slice(0, 7));
   const { user } = useAuth();
   // Removed t = useTranslations()
+  const router = useRouter();
 
   useEffect(() => {
     if (user) {
@@ -134,13 +136,21 @@ export default function BudgetDashboard() {
     { id: 'charts', label: 'Gráficos', icon: 'ri-bar-chart-line' },
     { id: 'budgets', label: 'Limites de Orçamento', icon: 'ri-wallet-line' },
     { id: 'receipts', label: 'Recibos e Boletos', icon: 'ri-file-list-3-line' },
+    { id: 'settings', label: 'Configurações', icon: 'ri-settings-3-line', path: '/settings' },
   ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50">
       <Header 
         activeTab={activeTab} 
-        setActiveTab={setActiveTab}
+        setActiveTab={(tabId) => {
+          const tab = tabs.find(t => t.id === tabId);
+          if (tab && tab.path) {
+            router.push(tab.path);
+          } else {
+            setActiveTab(tabId);
+          }
+        }}
         tabs={tabs}
         selectedMonth={selectedMonth}
         setSelectedMonth={setSelectedMonth}
