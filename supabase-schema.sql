@@ -21,6 +21,57 @@ CREATE TABLE IF NOT EXISTS budget_limits (
   UNIQUE(user_id, category_id)
 );
 
+-- Family Groups Table
+create table public.family_groups (
+  id uuid default uuid_generate_v4() primary key,
+  owner_id uuid references auth.users(id) on delete cascade,
+  name text,
+  created_at timestamp with time zone default now()
+);
+
+-- Family Members Table
+create table public.family_members (
+  id uuid default uuid_generate_v4() primary key,
+  group_id uuid references public.family_groups(id) on delete cascade,
+  user_id uuid references auth.users(id) on delete cascade,
+  invited_email text,
+  role text default 'member', -- 'owner' or 'member'
+  status text default 'pending', -- 'pending', 'active'
+  invited_at timestamp with time zone default now(),
+  accepted_at timestamp with time zone
+);
+
+-- Index for quick lookup
+create index if not exists idx_family_members_group_id on public.family_members(group_id);
+create index if not exists idx_family_members_user_id on public.family_members(user_id);
+
+-- Add group_id to transactions
+alter table public.transactions add column group_id uuid references public.family_groups(id);
+
+-- Add group_id to budget_limits
+alter table public.budget_limits add column group_id uuid references public.family_groups(id);
+
+-- Add group_id to user_financial_settings
+alter table public.user_financial_settings add column group_id uuid references public.family_groups(id);
+
+-- Allow group members to view transactions
+create policy "Group members can view transactions" on transactions
+  for select using (
+    group_id in (
+      select group_id from public.family_members
+      where user_id = auth.uid() and status = 'active'
+    )
+  );
+
+-- Allow group members to insert transactions
+create policy "Group members can insert transactions" on transactions
+  for insert with check (
+    group_id in (
+      select group_id from public.family_members
+      where user_id = auth.uid() and status = 'active'
+    )
+  );
+
 -- Create indexes
 CREATE INDEX IF NOT EXISTS idx_transactions_user_id ON transactions(user_id);
 CREATE INDEX IF NOT EXISTS idx_transactions_date ON transactions(date);
