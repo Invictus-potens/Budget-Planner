@@ -50,6 +50,12 @@ export async function POST(req: NextRequest) {
     }
     return NextResponse.json({ success: true, results });
   } catch (error) {
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    let message = "Erro desconhecido";
+    if (error instanceof Error) {
+      message = error.message;
+    } else if (typeof error === "string") {
+      message = error;
+    }
+    return NextResponse.json({ success: false, error: message }, { status: 500 });
   }
 } 
