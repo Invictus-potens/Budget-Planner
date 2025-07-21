@@ -2,6 +2,7 @@
 
 import { useAuth } from '../contexts/AuthContext';
 import { useRouter, usePathname } from 'next/navigation';
+import Link from 'next/link';
 
 interface Tab {
   id: string;
