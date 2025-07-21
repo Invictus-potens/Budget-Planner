@@ -30,8 +30,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Use 'en' as the default language
-  const locale = 'en';
+  // Use 'pt-BR' como idioma padrão
+  const locale = 'pt-BR';
   return (
     <html lang={locale} suppressHydrationWarning={true}>
       <body

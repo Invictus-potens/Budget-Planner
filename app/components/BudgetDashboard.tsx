@@ -7,6 +7,7 @@ import TransactionList from './TransactionList';
 import CategorySummary from './CategorySummary';
 import MonthlyCharts from './MonthlyCharts';
 import BudgetLimits from './BudgetLimits';
+import ReceiptsUpload from './ReceiptsUpload';
 import { Transaction, BudgetLimit } from '../types/budget';
 import { useAuth } from '../contexts/AuthContext';
 import { 
@@ -132,13 +133,14 @@ export default function BudgetDashboard() {
     { id: 'transactions', label: 'Transactions', icon: 'ri-list-check-line' },
     { id: 'charts', label: 'Charts', icon: 'ri-bar-chart-line' },
     { id: 'budgets', label: 'Budget Limits', icon: 'ri-wallet-line' },
+    { id: 'receipts', label: 'Recibos & Boletos', icon: 'ri-file-list-3-line' },
   ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50">
       <Header 
         activeTab={activeTab} 
-        setActiveTab={setActiveTab} 
+        setActiveTab={setActiveTab}
         tabs={tabs}
         selectedMonth={selectedMonth}
         setSelectedMonth={setSelectedMonth}
@@ -182,6 +184,15 @@ export default function BudgetDashboard() {
             transactions={transactions}
             selectedMonth={selectedMonth}
           />
+        )}
+
+        {activeTab === 'receipts' && (
+          <div className="max-w-3xl mx-auto">
+            <h1 className="text-3xl font-bold text-purple-700 mb-6">Recibos & Boletos</h1>
+            <div className="bg-white rounded-lg shadow p-6">
+              <ReceiptsUpload />
+            </div>
+          </div>
         )}
       </main>
     </div>
