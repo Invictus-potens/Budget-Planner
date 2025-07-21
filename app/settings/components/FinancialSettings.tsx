@@ -70,24 +70,24 @@ export function FinancialSettings() {
   return (
     <Card>
       <div className="flex items-center gap-2 mb-2">
-        <span className="text-magenta text-2xl">💸</span>
-        <h2 className="text-lg font-semibold text-grayDark">Configurações Financeiras</h2>
+        <span className="text-pink-500 text-2xl">💸</span>
+        <h2 className="text-lg font-semibold text-gray-800">Configurações Financeiras</h2>
       </div>
       {loading && (
-        <div className="text-grayMedium text-sm mb-2">Carregando configurações...</div>
+        <div className="text-gray-500 text-sm mb-2">Carregando configurações...</div>
       )}
-      <label className="text-grayMedium font-medium">Salário Principal (Opcional)
+      <label className="text-gray-500 font-medium">Salário Principal (Opcional)
         <input
           type="number"
-          className="mt-1 block w-full border border-grayLight rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-magenta focus:border-magenta"
+          className="mt-1 block w-full border border-gray-200 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500"
           value={salary ?? ''}
           onChange={e => set({ salary: Number(e.target.value) || null })}
           placeholder="0"
         />
       </label>
-      <label className="text-grayMedium font-medium">Dia do Salário
+      <label className="text-gray-500 font-medium">Dia do Salário
         <select
-          className="mt-1 block w-full border border-grayLight rounded-md px-3 py-2 bg-white"
+          className="mt-1 block w-full border border-gray-200 rounded-md px-3 py-2 bg-white"
           value={payday}
           onChange={e => set({ payday: e.target.value === 'lastBusinessDay' ? 'lastBusinessDay' : Number(e.target.value) })}
         >
@@ -98,7 +98,7 @@ export function FinancialSettings() {
         </select>
       </label>
       <div>
-        <span className="text-grayMedium font-medium">Moeda Padrão</span>
+        <span className="text-gray-500 font-medium">Moeda Padrão</span>
         <div className="flex gap-2 mt-2">
           {[
             { code: 'BRL', label: 'Real (R$)', hint: 'Brasileiro' },
@@ -109,26 +109,26 @@ export function FinancialSettings() {
               type="button"
               className={`px-4 py-2 rounded-md font-semibold border transition
                 ${currency === opt.code
-                  ? 'bg-pastelPink text-magenta border-magenta'
-                  : 'bg-white border-grayLight text-grayMedium hover:border-magenta'}
+                  ? 'bg-pink-100 text-pink-600 border-pink-500'
+                  : 'bg-white border-gray-200 text-gray-500 hover:border-pink-500'}
               `}
               onClick={() => set({ currency: opt.code as any })}
             >
               <div className="text-sm">{opt.label}</div>
-              <div className="text-xs text-grayMedium">{opt.hint}</div>
+              <div className="text-xs text-gray-500">{opt.hint}</div>
             </button>
           ))}
         </div>
       </div>
       <button
-        className="mt-4 bg-magenta text-white font-semibold px-6 py-2 rounded-md shadow hover:bg-pink-600 transition"
+        className="mt-4 bg-pink-500 hover:bg-pink-600 text-white font-semibold px-6 py-2 rounded-md shadow transition"
         onClick={handleSave}
         disabled={saving}
       >
         {saving ? 'Salvando...' : 'Salvar'}
       </button>
       {message && (
-        <div className={`mt-2 text-sm ${message.includes('sucesso') ? 'text-green' : 'text-red'}`}>
+        <div className={`mt-2 text-sm ${message.includes('sucesso') ? 'text-green-600' : 'text-red-600'}`}>
           {message}
         </div>
       )}
