@@ -416,10 +416,10 @@ export default function MonthlyCharts({ transactions, selectedMonth }: MonthlyCh
                     : 'text-gray-600 hover:text-blue-600'
                 }`}
               >
-                {view === 'pie' && 'Pie Chart'}
-                {view === 'bar' && 'Bar Chart'}
-                {view === 'line' && 'Line Chart'}
-                {view === 'area' && 'Area Chart'}
+                {view === 'pie' && 'Gráfico de Pizza'}
+                {view === 'bar' && 'Gráfico de Barras'}
+                {view === 'line' && 'Gráfico de Linha'}
+                {view === 'area' && 'Gráfico de Área'}
               </button>
             ))}
           </div>
@@ -433,9 +433,9 @@ export default function MonthlyCharts({ transactions, selectedMonth }: MonthlyCh
               onChange={(e) => setTimeRange(e.target.value as TimeRange)}
               className="px-3 py-1.5 text-sm border border-gray-300 rounded-md bg-white focus:outline-none focus:ring-2 focus:ring-purple-500"
             >
-              <option value="monthly">Monthly</option>
-              <option value="quarterly">Quarterly</option>
-              <option value="yearly">Yearly</option>
+              <option value="monthly">Mensal</option>
+              <option value="quarterly">Trimestral</option>
+              <option value="yearly">Anual</option>
             </select>
           )}
         </div>
@@ -453,17 +453,17 @@ export default function MonthlyCharts({ transactions, selectedMonth }: MonthlyCh
         {activeChart === 'expense-breakdown' && (
           <>
             <div className="bg-gray-50 rounded-lg p-4">
-              <div className="text-sm text-gray-600">Total Expenses</div>
+              <div className="text-sm text-gray-600">Total de Despesas</div>
               <div className="text-2xl font-bold text-gray-800">
                 ${expenseBreakdownData.reduce((sum, item) => sum + item.value, 0).toFixed(2)}
               </div>
             </div>
             <div className="bg-gray-50 rounded-lg p-4">
-              <div className="text-sm text-gray-600">Categories</div>
+              <div className="text-sm text-gray-600">Categorias</div>
               <div className="text-2xl font-bold text-gray-800">{expenseBreakdownData.length}</div>
             </div>
             <div className="bg-gray-50 rounded-lg p-4">
-              <div className="text-sm text-gray-600">Largest Category</div>
+              <div className="text-sm text-gray-600">Categoria Maior</div>
               <div className="text-lg font-semibold text-gray-800">
                 {expenseBreakdownData.length > 0 ? expenseBreakdownData[0].name : 'N/A'}
               </div>

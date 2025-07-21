@@ -75,7 +75,7 @@ export default function BudgetDashboard() {
         setBudgetLimits(limitsData.data);
       }
     } catch (error) {
-      console.error('Error loading data:', error);
+      console.error('Erro ao carregar dados:', error);
     }
   };
 
@@ -93,7 +93,7 @@ export default function BudgetDashboard() {
         setTransactions(prev => [...prev, newTransaction]);
       }
     } catch (error) {
-      console.error('Error saving transaction:', error);
+      console.error('Erro ao salvar transação:', error);
     }
   };
 
@@ -106,7 +106,7 @@ export default function BudgetDashboard() {
         setTransactions(prev => prev.filter(t => t.id !== id));
       }
     } catch (error) {
-      console.error('Error deleting transaction:', error);
+      console.error('Erro ao deletar transação:', error);
     }
   };
 
@@ -124,16 +124,16 @@ export default function BudgetDashboard() {
         setBudgetLimits(updatedLimits);
       }
     } catch (error) {
-      console.error('Error saving budget limit:', error);
+      console.error('Erro ao salvar limite de orçamento:', error);
     }
   };
 
   const tabs = [
-    { id: 'overview', label: 'Overview', icon: 'ri-dashboard-line' },
-    { id: 'transactions', label: 'Transactions', icon: 'ri-list-check-line' },
-    { id: 'charts', label: 'Charts', icon: 'ri-bar-chart-line' },
-    { id: 'budgets', label: 'Budget Limits', icon: 'ri-wallet-line' },
-    { id: 'receipts', label: 'Recibos & Boletos', icon: 'ri-file-list-3-line' },
+    { id: 'overview', label: 'Visão Geral', icon: 'ri-dashboard-line' },
+    { id: 'transactions', label: 'Transações', icon: 'ri-list-check-line' },
+    { id: 'charts', label: 'Gráficos', icon: 'ri-bar-chart-line' },
+    { id: 'budgets', label: 'Limites de Orçamento', icon: 'ri-wallet-line' },
+    { id: 'receipts', label: 'Recibos e Boletos', icon: 'ri-file-list-3-line' },
   ];
 
   return (

@@ -46,7 +46,7 @@ export default function TransactionForm({ onSubmit }: TransactionFormProps) {
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
       <h2 className="text-xl font-semibold text-gray-800 mb-6 flex items-center">
         <i className="ri-add-circle-line text-purple-600 mr-2"></i>
-        Add Transaction
+        Adicionar Transação
       </h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -61,7 +61,7 @@ export default function TransactionForm({ onSubmit }: TransactionFormProps) {
             }`}
           >
             <i className="ri-arrow-down-line mr-1"></i>
-            Expense
+            Despesa
           </button>
           <button
             type="button"
@@ -73,12 +73,12 @@ export default function TransactionForm({ onSubmit }: TransactionFormProps) {
             }`}
           >
             <i className="ri-arrow-up-line mr-1"></i>
-            Income
+            Receita
           </button>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Amount</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Valor</label>
           <div className="relative">
             <i className="ri-money-dollar-circle-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
             <input
@@ -94,7 +94,7 @@ export default function TransactionForm({ onSubmit }: TransactionFormProps) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Category</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Categoria</label>
           <div className="relative">
             <i className="ri-price-tag-3-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
             <select
@@ -103,7 +103,7 @@ export default function TransactionForm({ onSubmit }: TransactionFormProps) {
               className="w-full pl-10 pr-8 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300 text-sm appearance-none bg-white"
               required
             >
-              <option value="">Select category</option>
+              <option value="">Selecione uma categoria</option>
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
                   {cat.name}
@@ -115,7 +115,7 @@ export default function TransactionForm({ onSubmit }: TransactionFormProps) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Account</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Conta</label>
           <div className="relative">
             <i className="ri-bank-card-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
             <select
@@ -134,21 +134,21 @@ export default function TransactionForm({ onSubmit }: TransactionFormProps) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Descrição</label>
           <div className="relative">
             <i className="ri-file-text-line absolute left-3 top-3 text-gray-400"></i>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300 text-sm resize-none"
-              placeholder="Optional description..."
+              placeholder="Descrição opcional..."
               rows={3}
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Date</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Data</label>
           <div className="relative">
             <i className="ri-calendar-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
             <input
@@ -170,7 +170,7 @@ export default function TransactionForm({ onSubmit }: TransactionFormProps) {
           }`}
         >
           <i className="ri-add-line mr-2"></i>
-          Add {type === 'expense' ? 'Expense' : 'Income'}
+          Adicionar {type === 'expense' ? 'Despesa' : 'Receita'}
         </button>
       </form>
     </div>

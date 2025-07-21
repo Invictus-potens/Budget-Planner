@@ -65,7 +65,7 @@ export default function BudgetLimits({ budgetLimits, onUpdate, transactions, sel
         <div className="bg-blue-50 rounded-2xl p-6 border border-blue-100">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-blue-600 text-sm font-medium">Total Budget</p>
+              <p className="text-blue-600 text-sm font-medium">Total de Orçamento</p>
               <p className="text-2xl font-bold text-blue-700">${totalBudget.toFixed(2)}</p>
             </div>
             <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
@@ -77,7 +77,7 @@ export default function BudgetLimits({ budgetLimits, onUpdate, transactions, sel
         <div className="bg-purple-50 rounded-2xl p-6 border border-purple-100">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-purple-600 text-sm font-medium">Total Spent</p>
+              <p className="text-purple-600 text-sm font-medium">Total Gasto</p>
               <p className="text-2xl font-bold text-purple-700">${totalSpent.toFixed(2)}</p>
             </div>
             <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
@@ -90,10 +90,10 @@ export default function BudgetLimits({ budgetLimits, onUpdate, transactions, sel
           <div className="flex items-center justify-between">
             <div>
               <p className={`${overBudgetCount > 0 ? 'text-red-600' : 'text-green-600'} text-sm font-medium`}>
-                Over Budget
+                Acima do Limite
               </p>
               <p className={`text-2xl font-bold ${overBudgetCount > 0 ? 'text-red-700' : 'text-green-700'}`}>
-                {overBudgetCount} {overBudgetCount === 1 ? 'Category' : 'Categories'}
+                {overBudgetCount} {overBudgetCount === 1 ? 'Categoria' : 'Categorias'}
               </p>
             </div>
             <div className={`w-12 h-12 ${overBudgetCount > 0 ? 'bg-red-100' : 'bg-green-100'} rounded-full flex items-center justify-center`}>
@@ -106,7 +106,7 @@ export default function BudgetLimits({ budgetLimits, onUpdate, transactions, sel
       <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
         <h3 className="text-lg font-semibold text-gray-800 mb-6 flex items-center">
           <i className="ri-settings-line text-purple-600 mr-2"></i>
-          Budget Limits by Category
+          Limites de Orçamento por Categoria
         </h3>
 
         <div className="space-y-4">
@@ -120,7 +120,7 @@ export default function BudgetLimits({ budgetLimits, onUpdate, transactions, sel
                   <div>
                     <h4 className="font-medium text-gray-800">{category.name}</h4>
                     <p className="text-sm text-gray-500">
-                      Spent: ${category.spent.toFixed(2)}
+                      Gasto: ${category.spent.toFixed(2)}
                       {category.limit > 0 && (
                         <span className="ml-2">
                           / ${category.limit.toFixed(2)} ({category.percentage.toFixed(1)}%)
@@ -133,7 +133,7 @@ export default function BudgetLimits({ budgetLimits, onUpdate, transactions, sel
                 <div className="flex items-center space-x-2">
                   {category.isOverBudget && (
                     <span className="px-2 py-1 bg-red-100 text-red-600 text-xs rounded-full">
-                      Over by ${(category.spent - category.limit).toFixed(2)}
+                      Acima do Limite em ${(category.spent - category.limit).toFixed(2)}
                     </span>
                   )}
                   
@@ -168,7 +168,7 @@ export default function BudgetLimits({ budgetLimits, onUpdate, transactions, sel
                       className="px-3 py-1 text-sm text-purple-600 hover:bg-purple-50 rounded-lg transition-colors flex items-center space-x-1"
                     >
                       <i className="ri-edit-line text-xs"></i>
-                      <span>{category.limit > 0 ? 'Edit' : 'Set'} Limit</span>
+                      <span>{category.limit > 0 ? 'Editar' : 'Definir'} Limite</span>
                     </button>
                   )}
                 </div>

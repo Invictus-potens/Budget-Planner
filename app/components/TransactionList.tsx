@@ -71,10 +71,10 @@ export default function TransactionList({ transactions, onDelete, selectedMonth 
           onClick={handleExport}
           className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm font-medium whitespace-nowrap flex items-center"
           disabled={sortedTransactions.length === 0}
-          title="Exportar transações para CSV"
+          title="Exportar transações para Excel"
         >
           <i className="ri-download-line mr-2"></i>
-          Exportar CSV
+          Exportar Excel
         </button>
       </div>
 
@@ -87,7 +87,7 @@ export default function TransactionList({ transactions, onDelete, selectedMonth 
             className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
             title="Filtrar por tipo"
           >
-            <option value="all">Todos os Tipos</option>
+            <option value="all">Todos os tipos</option>
             <option value="income">Receita</option>
             <option value="expense">Despesa</option>
           </select>
@@ -101,7 +101,7 @@ export default function TransactionList({ transactions, onDelete, selectedMonth 
             className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
             title="Filtrar por categoria"
           >
-            <option value="all">Todas as Categorias</option>
+            <option value="all">Todas as categorias</option>
             {allCategories.map(cat => (
               <option key={cat.id} value={cat.id}>{cat.name}</option>
             ))}
@@ -129,8 +129,8 @@ export default function TransactionList({ transactions, onDelete, selectedMonth 
             className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
             title="Ordem de exibição"
           >
-            <option value="desc">Mais Recentes</option>
-            <option value="asc">Mais Antigas</option>
+            <option value="desc">Mais recentes</option>
+            <option value="asc">Mais antigas</option>
           </select>
         </div>
       </div>
@@ -138,7 +138,7 @@ export default function TransactionList({ transactions, onDelete, selectedMonth 
       {sortedTransactions.length === 0 ? (
         <div className="text-center py-12">
           <i className="ri-file-list-line text-4xl text-gray-300 mb-4"></i>
-          <p className="text-gray-500">Nenhuma transação encontrada.</p>
+          <p className="text-gray-500">Nenhuma transação encontrada</p>
         </div>
       ) : (
         <div className="space-y-3">
@@ -163,7 +163,7 @@ export default function TransactionList({ transactions, onDelete, selectedMonth 
                         {transaction.type}
                       </span>
                     </div>
-                    <p className="text-sm text-gray-600">{transaction.description || 'Sem descrição'}</p>
+                    <p className="text-sm text-gray-600">{transaction.description || 'Nenhuma descrição'}</p>
                     <div className="flex items-center space-x-3 text-xs text-gray-500 mt-1">
                       <span className="flex items-center">
                         <i className="ri-calendar-line mr-1"></i>

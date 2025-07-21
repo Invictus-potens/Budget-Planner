@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
       // Use form-data package for Node.js
       const ocrForm = new FormData();
       ocrForm.append('file', buffer, fileName);
-      const ocrRes = await fetch('https://tesseract-production-6d57.up.railway.app/ocr', {
+      const ocrRes = await fetch('https://tesseract-production-6d57.up.railway.app/', {
         method: 'POST',
         body: ocrForm,
         headers: ocrForm.getHeaders(),

@@ -22,13 +22,13 @@ export default function RegisterForm({ onToggleMode }: RegisterFormProps) {
     setError('');
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError('As senhas não coincidem');
       setLoading(false);
       return;
     }
 
     if (password.length < 6) {
-      setError('Password must be at least 6 characters long');
+      setError('A senha deve ter pelo menos 6 caracteres');
       setLoading(false);
       return;
     }
@@ -50,19 +50,19 @@ export default function RegisterForm({ onToggleMode }: RegisterFormProps) {
         <div className="bg-white rounded-2xl shadow-xl p-8 border border-purple-100 text-center">
           <div className="mb-6">
             <i className="ri-mail-check-line text-5xl text-green-500 mb-4"></i>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Check Your Email</h1>
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">Verifique seu Email</h1>
             <p className="text-gray-600">
-              We've sent a confirmation link to <strong>{email}</strong>
+              Nós enviamos um link de confirmação para <strong>{email}</strong>
             </p>
           </div>
           <p className="text-sm text-gray-500 mb-6">
-            Please check your email and click the confirmation link to activate your account.
+            Por favor, verifique seu email e clique no link de confirmação para ativar sua conta.
           </p>
           <button
             onClick={onToggleMode}
             className="text-purple-600 hover:text-purple-700 font-medium transition-colors duration-200"
           >
-            Back to Sign In
+            Voltar para o Login
           </button>
         </div>
       </div>
@@ -74,9 +74,9 @@ export default function RegisterForm({ onToggleMode }: RegisterFormProps) {
       <div className="bg-white rounded-2xl shadow-xl p-8 border border-purple-100">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
-            Create Account
+            Criar Conta
           </h1>
-          <p className="text-gray-600">Join Budget Planner to start managing your finances</p>
+          <p className="text-gray-600">Junte-se ao Budgeteer para começar a gerenciar suas finanças</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -88,7 +88,7 @@ export default function RegisterForm({ onToggleMode }: RegisterFormProps) {
 
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-              Email Address
+              Endereço de Email
             </label>
             <input
               id="email"
@@ -97,13 +97,13 @@ export default function RegisterForm({ onToggleMode }: RegisterFormProps) {
               onChange={(e) => setEmail(e.target.value)}
               required
               className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent transition-all duration-200"
-              placeholder="Enter your email"
+              placeholder="Digite seu email"
             />
           </div>
 
           <div>
             <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-              Password
+              Senha
             </label>
             <input
               id="password"
@@ -112,13 +112,13 @@ export default function RegisterForm({ onToggleMode }: RegisterFormProps) {
               onChange={(e) => setPassword(e.target.value)}
               required
               className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent transition-all duration-200"
-              placeholder="Create a password (min. 6 characters)"
+              placeholder="Crie uma senha (mínimo de 6 caracteres)"
             />
           </div>
 
           <div>
             <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700 mb-2">
-              Confirm Password
+              Confirmar Senha
             </label>
             <input
               id="confirmPassword"
@@ -127,7 +127,7 @@ export default function RegisterForm({ onToggleMode }: RegisterFormProps) {
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
               className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent transition-all duration-200"
-              placeholder="Confirm your password"
+              placeholder="Confirme sua senha"
             />
           </div>
 
@@ -139,22 +139,22 @@ export default function RegisterForm({ onToggleMode }: RegisterFormProps) {
             {loading ? (
               <div className="flex items-center justify-center">
                 <i className="ri-loader-4-line animate-spin mr-2"></i>
-                Creating Account...
+                Criando Conta...
               </div>
             ) : (
-              'Create Account'
+              'Criar Conta'
             )}
           </button>
         </form>
 
         <div className="mt-6 text-center">
           <p className="text-gray-600">
-            Already have an account?{' '}
+            Já tem uma conta?{' '}
             <button
               onClick={onToggleMode}
               className="text-purple-600 hover:text-purple-700 font-medium transition-colors duration-200"
             >
-              Sign in here
+              Faça login aqui
             </button>
           </p>
         </div>
