@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import Tesseract from "tesseract.js";
+import path from "path";
 
 export const runtime = "nodejs";
 
@@ -17,8 +18,11 @@ export async function POST(req: NextRequest) {
       console.log(`[UPLOAD] Processing file: ${fileName}`);
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
-      // OCR com Tesseract
-      const { data } = await Tesseract.recognize(buffer, "por");
+      // Set workerPath for Tesseract.js to avoid missing module error
+      const workerPath = path.join(process.cwd(), "node_modules", "tesseract.js", "dist", "worker.min.js");
+      const { data } = await Tesseract.recognize(buffer, "por", {
+        workerPath
+      });
       const text = data.text;
       console.log(`[UPLOAD] OCR complete for file: ${fileName}`);
       // Regexes básicas para MVP
