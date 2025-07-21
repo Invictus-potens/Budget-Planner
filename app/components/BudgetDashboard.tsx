@@ -21,7 +21,17 @@ import {
 import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from 'next/navigation';
 import SettingsPage from '../settings/page';
+import { useSettingsStore } from '@/store/settingsStore';
 // Removed next-intl import
+
+function getLastBusinessDay(year: number, month: number) {
+  // month is 1-based (1 = January)
+  let date = new Date(year, month, 0); // last day of month
+  while (date.getDay() === 0 || date.getDay() === 6) {
+    date.setDate(date.getDate() - 1);
+  }
+  return date.getDate();
+}
 
 export default function BudgetDashboard() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -29,6 +39,7 @@ export default function BudgetDashboard() {
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedMonth, setSelectedMonth] = useState(new Date().toISOString().slice(0, 7));
   const { user } = useAuth();
+  const { salary, payday } = useSettingsStore();
   // Removed t = useTranslations()
   const router = useRouter();
 
@@ -60,6 +71,45 @@ export default function BudgetDashboard() {
       };
     }
   }, [user]);
+
+  useEffect(() => {
+    const maybeAddSalaryTransaction = async () => {
+      if (!user || !salary || !payday) return;
+      if (!supabase) return;
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = today.getMonth() + 1;
+      let salaryDay = payday === 'lastBusinessDay'
+        ? getLastBusinessDay(year, month)
+        : Number(payday);
+
+      if (today.getDate() !== salaryDay) return;
+
+      // Check if a salary transaction already exists for this month
+      const { data: existing, error } = await supabase
+        .from('transactions')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('type', 'income')
+        .eq('description', 'Salário')
+        .gte('date', `${year}-${String(month).padStart(2, '0')}-01`)
+        .lte('date', `${year}-${String(month).padStart(2, '0')}-31`);
+
+      if (!existing || existing.length === 0) {
+        // Add the salary transaction
+        await supabase.from('transactions').insert([{
+          user_id: user.id,
+          amount: salary,
+          type: 'income',
+          description: 'Salário',
+          date: today.toISOString().slice(0, 10),
+          category: 'salary',
+        }]);
+      }
+    };
+
+    maybeAddSalaryTransaction();
+  }, [user, salary, payday]);
 
   const loadData = async () => {
     if (!user) return;
