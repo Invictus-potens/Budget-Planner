@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createWorker } from "tesseract.js";
 
 export const runtime = "nodejs";
 
@@ -17,11 +16,17 @@ export async function POST(req: NextRequest) {
       console.log(`[UPLOAD] Processing file: ${fileName}`);
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
-      // Create a new worker for each file (or reuse for multiple files for better perf)
-      const worker = await createWorker('por');
-      const { data } = await worker.recognize(buffer);
-      await worker.terminate();
-      const text = data.text;
+
+      // Send file to external Tesseract OCR service
+      const ocrForm = new FormData();
+      ocrForm.append('file', new Blob([buffer]), fileName);
+      const ocrRes = await fetch('https://tesseract-production-6d57.up.railway.app/ocr', {
+        method: 'POST',
+        body: ocrForm,
+      });
+      if (!ocrRes.ok) throw new Error('OCR service failed');
+      const ocrData = await ocrRes.json();
+      const text = ocrData.text;
       console.log(`[UPLOAD] OCR complete for file: ${fileName}`);
       // Regexes básicas para MVP
       const valorMatch = text.match(/(R\$|\d{1,3}(?:\.\d{3})*,\d{2})/);
