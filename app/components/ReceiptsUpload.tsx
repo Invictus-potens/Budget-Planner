@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { saveTransaction } from "../lib/supabase";
