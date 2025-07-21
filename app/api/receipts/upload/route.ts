@@ -24,7 +24,11 @@ export async function POST(req: NextRequest) {
         method: 'POST',
         body: ocrForm,
       });
-      if (!ocrRes.ok) throw new Error('OCR service failed');
+      if (!ocrRes.ok) {
+        const errorText = await ocrRes.text();
+        console.error(`[UPLOAD] OCR service failed for file: ${fileName}. Status: ${ocrRes.status}. Response: ${errorText}`);
+        throw new Error(`OCR service failed for file: ${fileName}. Status: ${ocrRes.status}. Response: ${errorText}`);
+      }
       const ocrData = await ocrRes.json();
       const text = ocrData.text;
       console.log(`[UPLOAD] OCR complete for file: ${fileName}`);
