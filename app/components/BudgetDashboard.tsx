@@ -132,13 +132,19 @@ export default function BudgetDashboard() {
     { id: 'transactions', label: 'Transactions', icon: 'ri-list-check-line' },
     { id: 'charts', label: 'Charts', icon: 'ri-bar-chart-line' },
     { id: 'budgets', label: 'Budget Limits', icon: 'ri-wallet-line' },
+    { id: 'receipts', label: 'Recibos & Boletos', icon: 'ri-file-list-3-line' },
   ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50">
       <Header 
         activeTab={activeTab} 
-        setActiveTab={setActiveTab} 
+        setActiveTab={(tabId) => {
+          setActiveTab(tabId);
+          if (tabId === 'receipts') {
+            window.location.href = '/receipts';
+          }
+        }}
         tabs={tabs}
         selectedMonth={selectedMonth}
         setSelectedMonth={setSelectedMonth}
