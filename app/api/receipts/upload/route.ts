@@ -18,10 +18,14 @@ export async function POST(req: NextRequest) {
       console.log(`[UPLOAD] Processing file: ${fileName}`);
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
-      // Set workerPath for Tesseract.js to avoid missing module error
-      const workerPath = path.join(process.cwd(), "node_modules", "tesseract.js", "dist", "worker.min.js");
+      // Use Node.js worker for Tesseract.js
+      const workerPath = path.join(process.cwd(), "node_modules", "tesseract.js", "dist", "node", "worker.js");
+      const langPath = path.join(process.cwd(), "node_modules", "tesseract.js", "dist", "lang");
+      const corePath = path.join(process.cwd(), "node_modules", "tesseract.js", "dist", "node", "tesseract-core.wasm.js");
       const { data } = await Tesseract.recognize(buffer, "por", {
-        workerPath
+        workerPath,
+        langPath,
+        corePath
       });
       const text = data.text;
       console.log(`[UPLOAD] OCR complete for file: ${fileName}`);
