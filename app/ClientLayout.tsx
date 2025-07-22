@@ -25,17 +25,20 @@ const geistMono = Geist_Mono({
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const darkTheme = useSettingsStore((s) => s.darkTheme);
-  const className = `${geistSans.variable} ${geistMono.variable} ${pacifico.variable} antialiased${darkTheme ? " dark" : ""}`;
+  const className = `${geistSans.variable} ${geistMono.variable} ${pacifico.variable} antialiased`;
 
   useEffect(() => {
-    console.log('[DarkMode Debug] darkTheme state:', darkTheme);
-    console.log('[DarkMode Debug] Computed body className:', className);
     if (typeof window !== 'undefined') {
-      const hasDark = document.body.classList.contains('dark');
-      console.log('[DarkMode Debug] <body> has dark class:', hasDark);
-      console.log('[DarkMode Debug] <body> classList:', document.body.className);
+      if (darkTheme) {
+        document.body.classList.add('dark');
+      } else {
+        document.body.classList.remove('dark');
+      }
+      // Debug logs
+      console.log('[DarkMode Debug] darkTheme state:', darkTheme);
+      console.log('[DarkMode Debug] <body> classList after effect:', document.body.className);
     }
-  }, [darkTheme, className]);
+  }, [darkTheme]);
 
   return (
     <body
