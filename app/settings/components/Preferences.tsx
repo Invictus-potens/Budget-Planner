@@ -12,15 +12,32 @@ export function Preferences() {
 
   // Aplicar o tema escuro no HTML quando o estado mudar
   useEffect(() => {
+    // Verificar se está no cliente
+    if (typeof window === 'undefined') return;
+    
+    console.log('Aplicando tema:', darkTheme);
+    const html = document.documentElement;
+    
     if (darkTheme) {
-      document.documentElement.classList.add('dark');
+      html.classList.add('dark');
+      html.style.backgroundColor = '#1E293B';
+      html.style.color = '#F1F5F9';
+      document.body.style.backgroundColor = '#1E293B';
+      document.body.style.color = '#F1F5F9';
     } else {
-      document.documentElement.classList.remove('dark');
+      html.classList.remove('dark');
+      html.style.backgroundColor = '';
+      html.style.color = '';
+      document.body.style.backgroundColor = '';
+      document.body.style.color = '';
     }
   }, [darkTheme]);
 
   // Carregar o tema salvo na inicialização
   useEffect(() => {
+    // Verificar se está no cliente
+    if (typeof window === 'undefined') return;
+    
     const savedTheme = localStorage.getItem('darkTheme');
     if (savedTheme) {
       const isDark = JSON.parse(savedTheme);
