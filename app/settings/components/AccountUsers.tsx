@@ -2,7 +2,12 @@ import { useState, useEffect } from 'react';
 import { Card } from './Card';
 import { supabase } from '../../lib/supabase';
 
-export function AccountUsers({ groupId, isOwner }) {
+interface AccountUsersProps {
+  groupId?: string;
+  isOwner?: boolean;
+}
+
+export function AccountUsers({ groupId, isOwner }: AccountUsersProps) {
   const [members, setMembers] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [inviteEmail, setInviteEmail] = useState('');
