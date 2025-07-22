@@ -48,7 +48,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   }, [darkTheme]);
 
   return (
-    <body className={className} suppressHydrationWarning={true}>
+    <body className={`${className} bg-background`} suppressHydrationWarning={true}>
       <AuthProvider>
         {children}
       </AuthProvider>
