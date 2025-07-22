@@ -33,30 +33,30 @@
   }
 
   .dark {
-    --color-primary: '#A78BFA';
-    --color-primary-light: '#3730A3';
+    --color-primary: #A78BFA;
+    --color-primary-light: #3730A3;
     --color-primary-dark: #DDD6FE;
-    --color-accent: '#F472B6';
-    --color-accent-light: '#500724';
-    --color-background: '#111827';
-    --color-surface: '#1F2937';
-    --color-border: '#374151';
-    --color-text: '#F9FAFB';
-    --color-text-muted: '#9CA3AF';
-    --color-success: '#22C55E';
-    --color-success-light: '#14532D';
+    --color-accent: #F472B6;
+    --color-accent-light: #500724;
+    --color-background: #111827;
+    --color-surface: #1F2937;
+    --color-border: #374151;
+    --color-text: #F9FAFB;
+    --color-text-muted: #9CA3AF;
+    --color-success: #22C55E;
+    --color-success-light: #14532D;
     --color-success-dark: #4ADE80;
-    --color-warning: '#F59E0B';
-    --color-warning-light: '#78350F';
-    --color-danger: '#EF4444';
-    --color-danger-light: '#7F1D1D';
-    --color-danger-dark: #F87171;
-    --color-info: '#3B82F6';
-    --color-info-light: '#1E3A8A';
-    --color-category-emerald: '#10B981';
-    --color-category-indigo: '#6366F1';
-    --color-category-teal: '#14B8A6';
-    --color-category-slate: '#64748B';
-    --color-category-gray: '#9CA3AF';
+    --color-warning: #F59E0B;
+    --color-warning-light: #78350F;
+    --color-danger: #EF4444;
+    --color-danger-light: #7F1D1D;
+    --color-danger-dark: #F8717;
+    --color-info: #3B82F6;
+    --color-info-light: #1E3A8A;
+    --color-category-emerald: #10B981;
+    --color-category-indigo: #6366F1;
+    --color-category-teal: #14B8A6;
+    --color-category-slate: #64748B;
+    --color-category-gray: #9CA3AF;
   }
 }
