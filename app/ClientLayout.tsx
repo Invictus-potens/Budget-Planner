@@ -29,31 +29,31 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      const root = document.documentElement;
       if (darkTheme) {
-        document.body.classList.add('dark');
+        root.classList.add('dark');
       } else {
-        document.body.classList.remove('dark');
+        root.classList.remove('dark');
       }
       // Debug logs
       console.log('[DarkMode Debug] darkTheme state:', darkTheme);
-      console.log('[DarkMode Debug] <body> classList after effect:', document.body.className);
+      console.log('[DarkMode Debug] <html> classList after effect:', root.className);
       // Log computed background color
       const computedBg = window.getComputedStyle(document.body).backgroundColor;
       console.log('[DarkMode Debug] Computed <body> background-color:', computedBg);
       // Log CSS variable value for --color-background
-      const cssVar = getComputedStyle(document.body).getPropertyValue('--color-background');
-      console.log('[DarkMode Debug] <body> --color-background:', cssVar);
+      const cssVar = getComputedStyle(root).getPropertyValue('--color-background');
+      console.log('[DarkMode Debug] <html> --color-background:', cssVar);
     }
   }, [darkTheme]);
 
   return (
-    <body
-      className={className}
-      suppressHydrationWarning={true}
-    >
-      <AuthProvider>
-        {children}
-      </AuthProvider>
-    </body>
+    <html lang="en" className={className} suppressHydrationWarning={true}>
+      <body>
+        <AuthProvider>
+          {children}
+        </AuthProvider>
+      </body>
+    </html>
   );
-} 
+}
