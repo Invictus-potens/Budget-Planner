@@ -7,8 +7,15 @@ interface AccountUsersProps {
   isOwner?: boolean;
 }
 
+interface FamilyMember {
+  id: string;
+  invited_email: string;
+  role: string;
+  status: string;
+}
+
 export function AccountUsers({ groupId, isOwner }: AccountUsersProps) {
-  const [members, setMembers] = useState([]);
+  const [members, setMembers] = useState<FamilyMember[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [inviteEmail, setInviteEmail] = useState('');
   const [loading, setLoading] = useState(false);
