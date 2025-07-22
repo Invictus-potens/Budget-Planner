@@ -15,6 +15,7 @@ export function AccountUsers({ groupId, isOwner }: AccountUsersProps) {
 
   // Fetch members on mount or when groupId changes
   useEffect(() => {
+    if (!supabase) return;
     if (groupId) {
       supabase
         .from('family_members')
@@ -25,6 +26,7 @@ export function AccountUsers({ groupId, isOwner }: AccountUsersProps) {
   }, [groupId]);
 
   const handleInvite = async () => {
+    if (!supabase) return;
     setLoading(true);
     await supabase.from('family_members').insert([
       {
