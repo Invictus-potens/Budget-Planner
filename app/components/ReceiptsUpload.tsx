@@ -183,7 +183,7 @@ export default function ReceiptsUpload() {
     <div>
       <div
         className={`border-2 border-dashed rounded-lg p-8 text-center cursor-pointer transition-colors ${
-          dragActive ? "border-pink-400 bg-pink-50" : "border-purple-300 bg-white"
+          dragActive ? "border-accent bg-accent-light" : "border-primary-light bg-surface"
         }`}
         onClick={openFileDialog}
         onDrop={handleDrop}
@@ -201,13 +201,13 @@ export default function ReceiptsUpload() {
           onChange={handleInputChange}
           title="Selecione arquivos PDF, JPG ou PNG para upload"
         />
-        <span className="text-gray-500">
-          Arraste e solte arquivos PDF, JPG ou PNG aqui, ou <span className="text-pink-500 underline">clique para selecionar</span>.
+        <span className="text-muted">
+          Arraste e solte arquivos PDF, JPG ou PNG aqui, ou <span className="text-accent underline">clique para selecionar</span>.
         </span>
       </div>
       {loading && (
         <div className="flex justify-center items-center mt-6">
-          <span className="text-purple-600 animate-pulse">Processando OCR...</span>
+          <span className="text-primary animate-pulse">Processando OCR...</span>
         </div>
       )}
       {results.length > 0 && (
@@ -272,7 +272,7 @@ export default function ReceiptsUpload() {
                   ))}
                 </select>
                 <button
-                  className="mt-2 w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-4 rounded transition-colors disabled:opacity-50"
+                  className="mt-2 w-full bg-primary hover:bg-primary-dark text-background font-semibold py-2 px-4 rounded transition-colors disabled:opacity-50"
                   onClick={() => handleSaveTransaction(result.fileName)}
                   disabled={saving[result.fileName]}
                   type="button"
@@ -280,9 +280,9 @@ export default function ReceiptsUpload() {
                   {saving[result.fileName] ? "Salvando..." : "Salvar como transação"}
                 </button>
                 {saveResult[result.fileName] && (
-                  <div className={`mt-2 text-sm ${saveResult[result.fileName].includes("sucesso") ? "text-green-600" : "text-red-600"}`}>{saveResult[result.fileName]}</div>
+                  <div className={`mt-2 text-sm ${saveResult[result.fileName].includes("sucesso") ? "text-success" : "text-danger"}`}>{saveResult[result.fileName]}</div>
                 )}
-                <label className="block text-xs text-gray-500">Texto Extraído</label>
+                <label className="block text-xs text-muted">Texto Extraído</label>
                 <textarea
                   className="w-full border rounded px-2 py-1 text-xs"
                   rows={3}

@@ -60,16 +60,16 @@ export default function TransactionList({ transactions, onDelete, selectedMonth 
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+    <div className="bg-surface rounded-2xl shadow-sm border border-border p-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 space-y-4 sm:space-y-0">
-        <h2 className="text-xl font-semibold text-gray-800 flex items-center">
-          <i className="ri-list-check-line text-purple-600 mr-2"></i>
+        <h2 className="text-xl font-semibold text-text flex items-center">
+          <i className="ri-list-check-line text-primary mr-2"></i>
           Transações ({sortedTransactions.length})
         </h2>
         
         <button
           onClick={handleExport}
-          className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors text-sm font-medium whitespace-nowrap flex items-center"
+          className="px-4 py-2 bg-primary text-background rounded-lg hover:bg-primary-dark transition-colors text-sm font-medium whitespace-nowrap flex items-center"
           disabled={sortedTransactions.length === 0}
           title="Exportar transações para Excel"
         >
@@ -147,24 +147,24 @@ export default function TransactionList({ transactions, onDelete, selectedMonth 
             const account = getAccountInfo(transaction.account ?? '');
             
             return (
-              <div key={transaction.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+              <div key={transaction.id} className="flex items-center justify-between p-4 bg-surface rounded-lg hover:bg-surface transition-colors">
                 <div className="flex items-center space-x-4">
                   <div className={`w-12 h-12 rounded-full flex items-center justify-center ${category.color}`}>
                     <i className={`${category.icon} text-white`}></i>
                   </div>
                   <div>
                     <div className="flex items-center space-x-2">
-                      <p className="font-medium text-gray-800">{category.name}</p>
+                      <p className="font-medium text-text">{category.name}</p>
                       <span className={`px-2 py-1 text-xs rounded-full ${
                         transaction.type === 'income' 
-                          ? 'bg-green-100 text-green-700' 
-                          : 'bg-red-100 text-red-700'
+                          ? 'bg-success-light text-success-dark' 
+                          : 'bg-danger-light text-danger-dark'
                       }`}>
                         {transaction.type}
                       </span>
                     </div>
-                    <p className="text-sm text-gray-600">{transaction.description || 'Nenhuma descrição'}</p>
-                    <div className="flex items-center space-x-3 text-xs text-gray-500 mt-1">
+                    <p className="text-sm text-muted">{transaction.description || 'Nenhuma descrição'}</p>
+                    <div className="flex items-center space-x-3 text-xs text-muted mt-1">
                       <span className="flex items-center">
                         <i className="ri-calendar-line mr-1"></i>
                         {new Date(transaction.date).toLocaleDateString()}
@@ -176,23 +176,20 @@ export default function TransactionList({ transactions, onDelete, selectedMonth 
                     </div>
                   </div>
                 </div>
-                
-                <div className="flex items-center space-x-3">
-                  <div className="text-right">
-                    <p className={`text-lg font-bold ${
-                      transaction.type === 'income' ? 'text-green-600' : 'text-red-600'
-                    }`}>
-                      {transaction.type === 'income' ? '+' : '-'}${transaction.amount.toFixed(2)}
-                    </p>
-                  </div>
-                  <button
-                    onClick={() => onDelete(transaction.id)}
-                    className="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors"
-                    title="Excluir transação"
-                  >
-                    <i className="ri-delete-bin-line"></i>
-                  </button>
+                <div className="text-right">
+                  <p className={`text-lg font-bold ${
+                    transaction.type === 'income' ? 'text-success' : 'text-danger'
+                  }`}>
+                    {transaction.type === 'income' ? '+' : '-'}${transaction.amount.toFixed(2)}
+                  </p>
                 </div>
+                <button
+                  onClick={() => onDelete(transaction.id)}
+                  className="w-8 h-8 flex items-center justify-center text-muted hover:text-danger hover:bg-danger-light rounded-full transition-colors"
+                  title="Excluir transação"
+                >
+                  <i className="ri-delete-bin-line"></i>
+                </button>
               </div>
             );
           })}

@@ -120,23 +120,23 @@ export default function MonthlyCharts({ transactions, selectedMonth }: MonthlyCh
   }, [transactions]);
 
   const COLORS = {
-    'blue': '#3B82F6',
-    'green': '#10B981',
-    'orange': '#F59E0B',
-    'red': '#EF4444',
-    'gray': '#6B7280',
-    'emerald': '#059669',
-    'purple': '#8B5CF6',
-    'pink': '#EC4899',
-    'indigo': '#6366F1',
-    'amber': '#F59E0B',
-    'rose': '#F43F5E',
-    'slate': '#64748B',
+    'blue': 'var(--color-info)',
+    'green': 'var(--color-success)',
+    'orange': 'var(--color-warning)',
+    'red': 'var(--color-danger)',
+    'gray': 'var(--color-category-gray)',
+    'emerald': 'var(--color-category-emerald)',
+    'purple': 'var(--color-primary)',
+    'pink': 'var(--color-accent)',
+    'indigo': 'var(--color-category-indigo)',
+    'amber': 'var(--color-warning)',
+    'rose': 'var(--color-danger)',
+    'slate': 'var(--color-category-slate)',
   };
 
   const getColor = (colorKey: string) => {
     const key = colorKey.split('-')[0] as keyof typeof COLORS;
-    return COLORS[key] || '#6B7280';
+    return COLORS[key] || 'var(--color-category-gray)';
   };
 
   const chartConfigs = [
@@ -163,7 +163,7 @@ export default function MonthlyCharts({ transactions, selectedMonth }: MonthlyCh
   const renderExpenseBreakdown = () => {
     if (expenseBreakdownData.length === 0) {
       return (
-        <div className="flex items-center justify-center h-full text-gray-500">
+        <div className="flex items-center justify-center h-full text-muted">
           <div className="text-center">
             <i className="ri-pie-chart-line text-4xl mb-4"></i>
             <p>No expense data available for this month</p>
@@ -214,7 +214,7 @@ export default function MonthlyCharts({ transactions, selectedMonth }: MonthlyCh
             />
             <YAxis />
             <Tooltip formatter={(value: number) => `$${value.toFixed(2)}`} />
-            <Bar dataKey="value" fill="#8B5CF6" />
+            <Bar dataKey="value" fill="var(--color-primary)" />
           </BarChart>
         </ResponsiveContainer>
       );
@@ -224,7 +224,7 @@ export default function MonthlyCharts({ transactions, selectedMonth }: MonthlyCh
   const renderCategoryComparison = () => {
     if (categoryComparisonData.length === 0) {
       return (
-        <div className="flex items-center justify-center h-full text-gray-500">
+        <div className="flex items-center justify-center h-full text-muted">
           <div className="text-center">
             <i className="ri-bar-chart-line text-4xl mb-4"></i>
             <p>No transaction data available for comparison</p>
@@ -248,8 +248,8 @@ export default function MonthlyCharts({ transactions, selectedMonth }: MonthlyCh
             <YAxis />
             <Tooltip formatter={(value: number) => `$${value.toFixed(2)}`} />
             <Legend />
-            <Bar dataKey="income" fill="#10B981" name="Income" />
-            <Bar dataKey="expenses" fill="#EF4444" name="Expenses" />
+            <Bar dataKey="income" fill="var(--color-success)" name="Income" />
+            <Bar dataKey="expenses" fill="var(--color-danger)" name="Expenses" />
           </BarChart>
         </ResponsiveContainer>
       );
@@ -300,21 +300,21 @@ export default function MonthlyCharts({ transactions, selectedMonth }: MonthlyCh
             <Line 
               type="monotone" 
               dataKey="income" 
-              stroke="#10B981" 
+              stroke="var(--color-success)" 
               strokeWidth={2}
               name="Income"
             />
             <Line 
               type="monotone" 
               dataKey="expenses" 
-              stroke="#EF4444" 
+              stroke="var(--color-danger)" 
               strokeWidth={2}
               name="Expenses"
             />
             <Line 
               type="monotone" 
               dataKey="balance" 
-              stroke="#3B82F6" 
+              stroke="var(--color-info)" 
               strokeWidth={2}
               name="Balance"
             />
@@ -332,9 +332,9 @@ export default function MonthlyCharts({ transactions, selectedMonth }: MonthlyCh
             <YAxis />
             <Tooltip formatter={(value: number) => `$${value.toFixed(2)}`} />
             <Legend />
-            <Bar dataKey="income" fill="#10B981" name="Income" />
-            <Bar dataKey="expenses" fill="#EF4444" name="Expenses" />
-            <Bar dataKey="balance" fill="#3B82F6" name="Balance" />
+            <Bar dataKey="income" fill="var(--color-success)" name="Income" />
+            <Bar dataKey="expenses" fill="var(--color-danger)" name="Expenses" />
+            <Bar dataKey="balance" fill="var(--color-info)" name="Balance" />
           </BarChart>
         </ResponsiveContainer>
       );
@@ -353,8 +353,8 @@ export default function MonthlyCharts({ transactions, selectedMonth }: MonthlyCh
               type="monotone" 
               dataKey="income" 
               stackId="1"
-              stroke="#10B981" 
-              fill="#10B981" 
+              stroke="var(--color-success)" 
+              fill="var(--color-success)" 
               fillOpacity={0.6}
               name="Income"
             />
@@ -362,8 +362,8 @@ export default function MonthlyCharts({ transactions, selectedMonth }: MonthlyCh
               type="monotone" 
               dataKey="expenses" 
               stackId="1"
-              stroke="#EF4444" 
-              fill="#EF4444" 
+              stroke="var(--color-danger)" 
+              fill="var(--color-danger)" 
               fillOpacity={0.6}
               name="Expenses"
             />
@@ -376,12 +376,12 @@ export default function MonthlyCharts({ transactions, selectedMonth }: MonthlyCh
   const currentChartConfig = chartConfigs.find(config => config.id === activeChart);
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+    <div className="bg-surface rounded-2xl shadow-sm border border-border p-6">
       <div className="flex flex-col lg:flex-row lg:items-center justify-between mb-6 space-y-4 lg:space-y-0">
-        <h2 className="text-xl font-semibold text-gray-800">Charts & Analytics</h2>
+        <h2 className="text-xl font-semibold text-text">Charts & Analytics</h2>
         
         {/* Main Chart Type Selector */}
-        <div className="flex rounded-lg bg-gray-50 p-1">
+        <div className="flex rounded-lg bg-surface p-1">
           {chartConfigs.map((chart) => (
             <button
               key={chart.id}
@@ -391,8 +391,8 @@ export default function MonthlyCharts({ transactions, selectedMonth }: MonthlyCh
               }}
               className={`px-4 py-2 rounded-md text-sm font-medium whitespace-nowrap transition-all flex items-center space-x-2 ${
                 activeChart === chart.id
-                  ? 'bg-purple-100 text-purple-700 shadow-sm'
-                  : 'text-gray-600 hover:text-purple-600'
+                  ? 'bg-primary-light text-primary-dark shadow-sm'
+                  : 'text-muted hover:text-primary hover:bg-primary-light'
               }`}
             >
               <span>{chart.label}</span>
@@ -405,7 +405,7 @@ export default function MonthlyCharts({ transactions, selectedMonth }: MonthlyCh
       <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 space-y-3 sm:space-y-0">
         {/* Chart View Toggle */}
         {currentChartConfig && (
-          <div className="flex rounded-lg bg-gray-50 p-1">
+          <div className="flex rounded-lg bg-surface p-1">
             {currentChartConfig.views.map((view) => (
               <button
                 key={view}
@@ -452,19 +452,19 @@ export default function MonthlyCharts({ transactions, selectedMonth }: MonthlyCh
       <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
         {activeChart === 'expense-breakdown' && (
           <>
-            <div className="bg-gray-50 rounded-lg p-4">
-              <div className="text-sm text-gray-600">Total de Despesas</div>
-              <div className="text-2xl font-bold text-gray-800">
+            <div className="bg-surface rounded-lg p-4">
+              <div className="text-sm text-muted">Total de Despesas</div>
+              <div className="text-2xl font-bold text-text">
                 ${expenseBreakdownData.reduce((sum, item) => sum + item.value, 0).toFixed(2)}
               </div>
             </div>
-            <div className="bg-gray-50 rounded-lg p-4">
-              <div className="text-sm text-gray-600">Categorias</div>
-              <div className="text-2xl font-bold text-gray-800">{expenseBreakdownData.length}</div>
+            <div className="bg-surface rounded-lg p-4">
+              <div className="text-sm text-muted">Categorias</div>
+              <div className="text-2xl font-bold text-text">{expenseBreakdownData.length}</div>
             </div>
-            <div className="bg-gray-50 rounded-lg p-4">
-              <div className="text-sm text-gray-600">Categoria Maior</div>
-              <div className="text-lg font-semibold text-gray-800">
+            <div className="bg-surface rounded-lg p-4">
+              <div className="text-sm text-muted">Categoria Maior</div>
+              <div className="text-lg font-semibold text-text">
                 {expenseBreakdownData.length > 0 ? expenseBreakdownData[0].name : 'N/A'}
               </div>
             </div>

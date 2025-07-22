@@ -29,11 +29,11 @@ export default function Header({ activeTab, setActiveTab, tabs, selectedMonth, s
   };
 
   return (
-    <header className="bg-white/80 backdrop-blur-sm border-b border-purple-100 sticky top-0 z-50">
+    <header className="bg-surface/80 backdrop-blur-sm border-b border-primary-light sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-8">
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+            <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               Budgeteer
             </h1>
             
@@ -45,8 +45,8 @@ export default function Header({ activeTab, setActiveTab, tabs, selectedMonth, s
                     href={tab.path}
                     className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 flex items-center space-x-2 ${
                       activeTab === tab.id || (typeof window !== 'undefined' && window.location.pathname === tab.path)
-                        ? 'bg-purple-100 text-purple-700 shadow-sm'
-                        : 'text-gray-600 hover:text-purple-600 hover:bg-purple-50'
+                        ? 'bg-primary-light text-primary-dark shadow-sm'
+                        : 'text-muted hover:text-primary hover:bg-primary-light'
                     }`}
                   >
                     <i className={`${tab.icon} text-sm`}></i>
@@ -58,8 +58,8 @@ export default function Header({ activeTab, setActiveTab, tabs, selectedMonth, s
                     onClick={() => setActiveTab(tab.id)}
                     className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 flex items-center space-x-2 ${
                       activeTab === tab.id
-                        ? 'bg-purple-100 text-purple-700 shadow-sm'
-                        : 'text-gray-600 hover:text-purple-600 hover:bg-purple-50'
+                        ? 'bg-primary-light text-primary-dark shadow-sm'
+                        : 'text-muted hover:text-primary hover:bg-primary-light'
                     }`}
                   >
                     <i className={`${tab.icon} text-sm`}></i>
@@ -100,8 +100,8 @@ export default function Header({ activeTab, setActiveTab, tabs, selectedMonth, s
               onClick={() => setActiveTab(tab.id)}
               className={`px-3 py-1 rounded-full text-xs font-medium whitespace-nowrap flex items-center space-x-1 ${
                 activeTab === tab.id
-                  ? 'bg-purple-100 text-purple-700'
-                  : 'text-gray-600 hover:text-purple-600 hover:bg-purple-50'
+                  ? 'bg-primary-light text-primary-dark'
+                  : 'text-muted hover:text-primary hover:bg-primary-light'
               }`}
             >
               <i className={`${tab.icon} text-xs`}></i>

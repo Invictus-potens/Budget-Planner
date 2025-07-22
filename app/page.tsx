@@ -9,10 +9,10 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-primary-light to-accent-light flex items-center justify-center">
         <div className="text-center">
-          <i className="ri-loader-4-line animate-spin text-4xl text-purple-600 mb-4"></i>
-          <p className="text-gray-600">Loading...</p>
+          <i className="ri-loader-4-line animate-spin text-4xl text-primary mb-4"></i>
+          <p className="text-muted">Loading...</p>
         </div>
       </div>
     );

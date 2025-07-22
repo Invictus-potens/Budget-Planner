@@ -43,21 +43,21 @@ export default function TransactionForm({ onSubmit }: TransactionFormProps) {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-      <h2 className="text-xl font-semibold text-gray-800 mb-6 flex items-center">
-        <i className="ri-add-circle-line text-purple-600 mr-2"></i>
+    <div className="bg-surface rounded-2xl shadow-sm border border-border p-6">
+      <h2 className="text-xl font-semibold text-text mb-6 flex items-center">
+        <i className="ri-add-circle-line text-primary mr-2"></i>
         Adicionar Transação
       </h2>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="flex rounded-lg bg-gray-50 p-1">
+        <div className="flex rounded-lg bg-surface p-1">
           <button
             type="button"
             onClick={() => {setType('expense'); setCategory('');}}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium whitespace-nowrap transition-all ${
               type === 'expense'
-                ? 'bg-red-100 text-red-700 shadow-sm'
-                : 'text-gray-600 hover:text-gray-800'
+                ? 'bg-danger-light text-danger-dark shadow-sm'
+                : 'text-muted hover:text-text'
             }`}
           >
             <i className="ri-arrow-down-line mr-1"></i>
@@ -68,8 +68,8 @@ export default function TransactionForm({ onSubmit }: TransactionFormProps) {
             onClick={() => {setType('income'); setCategory('');}}
             className={`flex-1 py-2 px-4 rounded-md text-sm font-medium whitespace-nowrap transition-all ${
               type === 'income'
-                ? 'bg-green-100 text-green-700 shadow-sm'
-                : 'text-gray-600 hover:text-gray-800'
+                ? 'bg-success-light text-success-dark shadow-sm'
+                : 'text-muted hover:text-text'
             }`}
           >
             <i className="ri-arrow-up-line mr-1"></i>
@@ -78,15 +78,15 @@ export default function TransactionForm({ onSubmit }: TransactionFormProps) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Valor</label>
+          <label className="block text-sm font-medium text-text mb-2">Valor</label>
           <div className="relative">
-            <i className="ri-money-dollar-circle-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            <i className="ri-money-dollar-circle-line absolute left-3 top-1/2 transform -translate-y-1/2 text-muted"></i>
             <input
               type="number"
               step="0.01"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300 text-sm"
+              className="w-full pl-10 pr-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-light text-sm"
               placeholder="0.00"
               required
             />
@@ -94,13 +94,13 @@ export default function TransactionForm({ onSubmit }: TransactionFormProps) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Categoria</label>
+          <label className="block text-sm font-medium text-text mb-2">Categoria</label>
           <div className="relative">
-            <i className="ri-price-tag-3-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            <i className="ri-price-tag-3-line absolute left-3 top-1/2 transform -translate-y-1/2 text-muted"></i>
             <select
               value={category}
               onChange={(e) => setCategory(e.target.value)}
-              className="w-full pl-10 pr-8 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300 text-sm appearance-none bg-white"
+              className="w-full pl-10 pr-8 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-light text-sm appearance-none bg-white"
               required
             >
               <option value="">Selecione uma categoria</option>
@@ -110,18 +110,18 @@ export default function TransactionForm({ onSubmit }: TransactionFormProps) {
                 </option>
               ))}
             </select>
-            <i className="ri-arrow-down-s-line absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+            <i className="ri-arrow-down-s-line absolute right-3 top-1/2 transform -translate-y-1/2 text-muted pointer-events-none"></i>
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Conta</label>
+          <label className="block text-sm font-medium text-text mb-2">Conta</label>
           <div className="relative">
-            <i className="ri-bank-card-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            <i className="ri-bank-card-line absolute left-3 top-1/2 transform -translate-y-1/2 text-muted"></i>
             <select
               value={account}
               onChange={(e) => setAccount(e.target.value)}
-              className="w-full pl-10 pr-8 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300 text-sm appearance-none bg-white"
+              className="w-full pl-10 pr-8 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-light text-sm appearance-none bg-white"
             >
               {ACCOUNTS.map((acc) => (
                 <option key={acc.id} value={acc.id}>
@@ -129,18 +129,18 @@ export default function TransactionForm({ onSubmit }: TransactionFormProps) {
                 </option>
               ))}
             </select>
-            <i className="ri-arrow-down-s-line absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+            <i className="ri-arrow-down-s-line absolute right-3 top-1/2 transform -translate-y-1/2 text-muted pointer-events-none"></i>
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Descrição</label>
+          <label className="block text-sm font-medium text-text mb-2">Descrição</label>
           <div className="relative">
-            <i className="ri-file-text-line absolute left-3 top-3 text-gray-400"></i>
+            <i className="ri-file-text-line absolute left-3 top-3 text-muted"></i>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300 text-sm resize-none"
+              className="w-full pl-10 pr-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-light text-sm resize-none"
               placeholder="Descrição opcional..."
               rows={3}
             />
@@ -148,14 +148,14 @@ export default function TransactionForm({ onSubmit }: TransactionFormProps) {
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Data</label>
+          <label className="block text-sm font-medium text-text mb-2">Data</label>
           <div className="relative">
-            <i className="ri-calendar-line absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+            <i className="ri-calendar-line absolute left-3 top-1/2 transform -translate-y-1/2 text-muted"></i>
             <input
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300 text-sm"
+              className="w-full pl-10 pr-4 py-3 border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-light text-sm"
               required
             />
           </div>
@@ -165,8 +165,8 @@ export default function TransactionForm({ onSubmit }: TransactionFormProps) {
           type="submit"
           className={`w-full py-3 px-4 rounded-lg font-medium whitespace-nowrap transition-all ${
             type === 'expense'
-              ? 'bg-red-500 hover:bg-red-600 text-white'
-              : 'bg-green-500 hover:bg-green-600 text-white'
+              ? 'bg-danger hover:bg-danger-dark text-background'
+              : 'bg-success hover:bg-success-dark text-background'
           }`}
         >
           <i className="ri-add-line mr-2"></i>
