@@ -48,12 +48,10 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   }, [darkTheme]);
 
   return (
-    <html lang="en" className={className} suppressHydrationWarning={true}>
-      <body>
-        <AuthProvider>
-          {children}
-        </AuthProvider>
-      </body>
-    </html>
+    <body className={className} suppressHydrationWarning={true}>
+      <AuthProvider>
+        {children}
+      </AuthProvider>
+    </body>
   );
 }
