@@ -37,6 +37,12 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       // Debug logs
       console.log('[DarkMode Debug] darkTheme state:', darkTheme);
       console.log('[DarkMode Debug] <body> classList after effect:', document.body.className);
+      // Log computed background color
+      const computedBg = window.getComputedStyle(document.body).backgroundColor;
+      console.log('[DarkMode Debug] Computed <body> background-color:', computedBg);
+      // Log CSS variable value for --color-background
+      const cssVar = getComputedStyle(document.body).getPropertyValue('--color-background');
+      console.log('[DarkMode Debug] <body> --color-background:', cssVar);
     }
   }, [darkTheme]);
 
