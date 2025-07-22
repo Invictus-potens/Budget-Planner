@@ -1,12 +1,39 @@
 'use client';
 
+import { useEffect } from 'react';
 import { Card } from './Card';
 import { useSettingsStore } from '../../../store/settingsStore';
 
 export function Preferences() {
   const darkTheme = useSettingsStore((s) => s.darkTheme);
   const set = useSettingsStore((s) => s.set);
-  console.log('darkTheme:', darkTheme); // Debug: check if state changes
+  
+  console.log('darkTheme:', darkTheme);
+
+  // Aplicar o tema escuro no HTML quando o estado mudar
+  useEffect(() => {
+    if (darkTheme) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [darkTheme]);
+
+  // Carregar o tema salvo na inicialização
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('darkTheme');
+    if (savedTheme) {
+      const isDark = JSON.parse(savedTheme);
+      set({ darkTheme: isDark });
+    }
+  }, [set]);
+
+  const toggleDarkTheme = () => {
+    const newTheme = !darkTheme;
+    set({ darkTheme: newTheme });
+    // Salvar no localStorage
+    localStorage.setItem('darkTheme', JSON.stringify(newTheme));
+  };
 
   return (
     <Card id="preferences-card">
@@ -30,7 +57,7 @@ export function Preferences() {
             type="checkbox"
             className="sr-only peer"
             checked={darkTheme}
-            onChange={() => set({ darkTheme: !darkTheme })}
+            onChange={toggleDarkTheme}
             aria-label="Tema Escuro"
           />
           <div className="w-11 h-6 bg-grayLight dark:bg-gray-700 rounded-full peer peer-checked:bg-blue transition-all shadow-inner"></div>
@@ -39,4 +66,4 @@ export function Preferences() {
       </div>
     </Card>
   );
-} 
+}

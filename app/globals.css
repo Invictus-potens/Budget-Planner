@@ -72,7 +72,26 @@
   /* Garantir que body e html também mudem de cor */
   html.dark,
   html.dark body {
-    background-color: var(--color-background);
-    color: var(--color-text);
+    background-color: var(--color-background) !important;
+    color: var(--color-text) !important;
+  }
+
+  /* Forçar backgrounds em modo escuro */
+  .dark * {
+    border-color: var(--color-border);
+  }
+
+  /* Garantir que inputs e selects também mudem */
+  .dark input,
+  .dark select,
+  .dark textarea {
+    background-color: var(--color-surface) !important;
+    color: var(--color-text) !important;
+    border-color: var(--color-border) !important;
+  }
+
+  /* Garantir que elementos com bg-white mudem */
+  .dark .bg-white {
+    background-color: var(--color-surface) !important;
   }
 }
