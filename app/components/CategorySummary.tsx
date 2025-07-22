@@ -60,7 +60,7 @@ export default function CategorySummary({ transactions, selectedMonth, budgetLim
         <div className="bg-green-50 rounded-2xl p-6 border border-green-100">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-green-600 text-sm font-medium">Total Income</p>
+              <p className="text-green-600 text-sm font-medium">Total de Receitas</p>
               <p className="text-2xl font-bold text-green-700">${totalIncome.toFixed(2)}</p>
             </div>
             <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
@@ -72,7 +72,7 @@ export default function CategorySummary({ transactions, selectedMonth, budgetLim
         <div className="bg-red-50 rounded-2xl p-6 border border-red-100">
           <div className="flex items-center justify-between">
             <div>
-              <p className="text-red-600 text-sm font-medium">Total Expenses</p>
+              <p className="text-red-600 text-sm font-medium">Total de Despesas</p>
               <p className="text-2xl font-bold text-red-700">${totalExpenses.toFixed(2)}</p>
             </div>
             <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
@@ -84,7 +84,7 @@ export default function CategorySummary({ transactions, selectedMonth, budgetLim
         <div className={`${balance >= 0 ? 'bg-blue-50 border-blue-100' : 'bg-orange-50 border-orange-100'} rounded-2xl p-6 border`}>
           <div className="flex items-center justify-between">
             <div>
-              <p className={`${balance >= 0 ? 'text-blue-600' : 'text-orange-600'} text-sm font-medium`}>Balance</p>
+              <p className={`${balance >= 0 ? 'text-blue-600' : 'text-orange-600'} text-sm font-medium`}>Saldo</p>
               <p className={`text-2xl font-bold ${balance >= 0 ? 'text-blue-700' : 'text-orange-700'}`}>
                 ${Math.abs(balance).toFixed(2)}
               </p>
@@ -100,7 +100,7 @@ export default function CategorySummary({ transactions, selectedMonth, budgetLim
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
             <i className="ri-pie-chart-line text-red-600 mr-2"></i>
-            Expense Categories
+            Categorias de Despesas
           </h3>
           <div className="space-y-3">
             {expensesByCategory.map(category => (
@@ -111,7 +111,7 @@ export default function CategorySummary({ transactions, selectedMonth, budgetLim
                   </div>
                   <div>
                     <p className="font-medium text-gray-800">{category.name}</p>
-                    <p className="text-sm text-gray-500">{category.transactions.length} transactions</p>
+                    <p className="text-sm text-gray-500">{category.transactions.length} transações</p>
                   </div>
                 </div>
                 <div className="text-right">
@@ -139,7 +139,7 @@ export default function CategorySummary({ transactions, selectedMonth, budgetLim
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
           <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
             <i className="ri-line-chart-line text-green-600 mr-2"></i>
-            Income Sources
+            Fontes de Receitas
           </h3>
           <div className="space-y-3">
             {incomeByCategory.map(category => (

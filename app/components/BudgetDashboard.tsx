@@ -19,7 +19,19 @@ import {
   supabase
 } from '../lib/supabase';
 import { v4 as uuidv4 } from 'uuid';
+import { useRouter } from 'next/navigation';
+import SettingsPage from '../settings/page';
+import { useSettingsStore } from '@/store/settingsStore';
 // Removed next-intl import
+
+function getLastBusinessDay(year: number, month: number) {
+  // month is 1-based (1 = January)
+  let date = new Date(year, month, 0); // last day of month
+  while (date.getDay() === 0 || date.getDay() === 6) {
+    date.setDate(date.getDate() - 1);
+  }
+  return date.getDate();
+}
 
 export default function BudgetDashboard() {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
@@ -27,7 +39,9 @@ export default function BudgetDashboard() {
   const [activeTab, setActiveTab] = useState('overview');
   const [selectedMonth, setSelectedMonth] = useState(new Date().toISOString().slice(0, 7));
   const { user } = useAuth();
+  const { salary, payday } = useSettingsStore();
   // Removed t = useTranslations()
+  const router = useRouter();
 
   useEffect(() => {
     if (user) {
@@ -58,6 +72,45 @@ export default function BudgetDashboard() {
     }
   }, [user]);
 
+  useEffect(() => {
+    const maybeAddSalaryTransaction = async () => {
+      if (!user || !salary || !payday) return;
+      if (!supabase) return;
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = today.getMonth() + 1;
+      let salaryDay = payday === 'lastBusinessDay'
+        ? getLastBusinessDay(year, month)
+        : Number(payday);
+
+      if (today.getDate() !== salaryDay) return;
+
+      // Check if a salary transaction already exists for this month
+      const { data: existing, error } = await supabase
+        .from('transactions')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('type', 'income')
+        .eq('description', 'Salário')
+        .gte('date', `${year}-${String(month).padStart(2, '0')}-01`)
+        .lte('date', `${year}-${String(month).padStart(2, '0')}-31`);
+
+      if (!existing || existing.length === 0) {
+        // Add the salary transaction
+        await supabase.from('transactions').insert([{
+          user_id: user.id,
+          amount: salary,
+          type: 'income',
+          description: 'Salário',
+          date: today.toISOString().slice(0, 10),
+          category: 'salary',
+        }]);
+      }
+    };
+
+    maybeAddSalaryTransaction();
+  }, [user, salary, payday]);
+
   const loadData = async () => {
     if (!user) return;
     
@@ -75,7 +128,7 @@ export default function BudgetDashboard() {
         setBudgetLimits(limitsData.data);
       }
     } catch (error) {
-      console.error('Error loading data:', error);
+      console.error('Erro ao carregar dados:', error);
     }
   };
 
@@ -93,7 +146,7 @@ export default function BudgetDashboard() {
         setTransactions(prev => [...prev, newTransaction]);
       }
     } catch (error) {
-      console.error('Error saving transaction:', error);
+      console.error('Erro ao salvar transação:', error);
     }
   };
 
@@ -106,7 +159,7 @@ export default function BudgetDashboard() {
         setTransactions(prev => prev.filter(t => t.id !== id));
       }
     } catch (error) {
-      console.error('Error deleting transaction:', error);
+      console.error('Erro ao deletar transação:', error);
     }
   };
 
@@ -124,16 +177,17 @@ export default function BudgetDashboard() {
         setBudgetLimits(updatedLimits);
       }
     } catch (error) {
-      console.error('Error saving budget limit:', error);
+      console.error('Erro ao salvar limite de orçamento:', error);
     }
   };
 
   const tabs = [
-    { id: 'overview', label: 'Overview', icon: 'ri-dashboard-line' },
-    { id: 'transactions', label: 'Transactions', icon: 'ri-list-check-line' },
-    { id: 'charts', label: 'Charts', icon: 'ri-bar-chart-line' },
-    { id: 'budgets', label: 'Budget Limits', icon: 'ri-wallet-line' },
-    { id: 'receipts', label: 'Recibos & Boletos', icon: 'ri-file-list-3-line' },
+    { id: 'overview', label: 'Visão Geral', icon: 'ri-dashboard-line' },
+    { id: 'transactions', label: 'Transações', icon: 'ri-list-check-line' },
+    { id: 'charts', label: 'Gráficos', icon: 'ri-bar-chart-line' },
+    { id: 'budgets', label: 'Limites de Orçamento', icon: 'ri-wallet-line' },
+    { id: 'receipts', label: 'Recibos e Boletos', icon: 'ri-file-list-3-line' },
+    { id: 'settings', label: 'Configurações', icon: 'ri-settings-3-line' },
   ];
 
   return (
@@ -145,7 +199,6 @@ export default function BudgetDashboard() {
         selectedMonth={selectedMonth}
         setSelectedMonth={setSelectedMonth}
       />
-      
       <main className="max-w-7xl mx-auto px-4 py-8">
         {activeTab === 'overview' && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -161,7 +214,6 @@ export default function BudgetDashboard() {
             </div>
           </div>
         )}
-
         {activeTab === 'transactions' && (
           <TransactionList 
             transactions={transactions} 
@@ -169,14 +221,12 @@ export default function BudgetDashboard() {
             selectedMonth={selectedMonth}
           />
         )}
-
         {activeTab === 'charts' && (
           <MonthlyCharts 
             transactions={transactions} 
             selectedMonth={selectedMonth}
           />
         )}
-
         {activeTab === 'budgets' && (
           <BudgetLimits 
             budgetLimits={budgetLimits}
@@ -185,7 +235,6 @@ export default function BudgetDashboard() {
             selectedMonth={selectedMonth}
           />
         )}
-
         {activeTab === 'receipts' && (
           <div className="max-w-3xl mx-auto">
             <h1 className="text-3xl font-bold text-purple-700 mb-6">Recibos & Boletos</h1>
@@ -193,6 +242,9 @@ export default function BudgetDashboard() {
               <ReceiptsUpload />
             </div>
           </div>
+        )}
+        {activeTab === 'settings' && (
+          <SettingsPage />
         )}
       </main>
     </div>

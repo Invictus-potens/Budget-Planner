@@ -26,27 +26,59 @@ Run the following SQL in your Supabase SQL Editor:
 
 ```sql
 -- Create tables
-CREATE TABLE IF NOT EXISTS transactions (
-  id TEXT PRIMARY KEY,
-  user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
-  description TEXT NOT NULL,
-  amount DECIMAL(10,2) NOT NULL,
-  category TEXT NOT NULL,
-  type TEXT NOT NULL CHECK (type IN ('income', 'expense')),
-  date DATE NOT NULL,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
+create table public.budget_limits (
+  id serial not null,
+  user_id uuid null,
+  category_id text not null,
+  limit_amount numeric(10, 2) not null,
+  created_at timestamp with time zone null default now(),
+  updated_at timestamp with time zone null default now(),
+  constraint budget_limits_pkey primary key (id),
+  constraint budget_limits_user_id_category_id_key unique (user_id, category_id),
+  constraint budget_limits_user_id_fkey foreign KEY (user_id) references auth.users (id) on delete CASCADE
+) TABLESPACE pg_default;
 
-CREATE TABLE IF NOT EXISTS budget_limits (
-  id SERIAL PRIMARY KEY,
-  user_id UUID REFERENCES auth.users(id) ON DELETE CASCADE,
-  category_id TEXT NOT NULL,
-  limit_amount DECIMAL(10,2) NOT NULL,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  UNIQUE(user_id, category_id)
-);
+create index IF not exists idx_budget_limits_user_id on public.budget_limits using btree (user_id) TABLESPACE pg_default;
+
+create trigger update_budget_limits_updated_at BEFORE
+update on budget_limits for EACH row
+execute FUNCTION update_updated_at_column ();
+
+create table public.transactions (
+  id text not null,
+  user_id uuid null,
+  description text not null,
+  amount numeric(10, 2) not null,
+  category text not null,
+  type text not null,
+  date date not null,
+  created_at timestamp with time zone null default now(),
+  updated_at timestamp with time zone null default now(),
+  constraint transactions_pkey primary key (id),
+  constraint transactions_user_id_fkey foreign KEY (user_id) references auth.users (id) on delete CASCADE,
+  constraint transactions_type_check check (
+    (
+      type = any (array['income'::text, 'expense'::text])
+    )
+  )
+) TABLESPACE pg_default;
+
+create index IF not exists idx_transactions_user_id on public.transactions using btree (user_id) TABLESPACE pg_default;
+
+create index IF not exists idx_transactions_date on public.transactions using btree (date) TABLESPACE pg_default;
+
+create trigger update_transactions_updated_at BEFORE
+update on transactions for EACH row
+execute FUNCTION update_updated_at_column ();
+
+create table public.user_financial_settings (
+  user_id uuid not null,
+  salary numeric null,
+  payday integer null,
+  currency text null,
+  constraint user_financial_settings_pkey primary key (user_id),
+  constraint user_financial_settings_user_id_fkey foreign KEY (user_id) references auth.users (id) on delete CASCADE
+) TABLESPACE pg_default;
 
 -- Create indexes
 CREATE INDEX IF NOT EXISTS idx_transactions_user_id ON transactions(user_id);

@@ -44,12 +44,12 @@ export default function LoginForm({ onToggleMode }: LoginFormProps) {
       <div className="bg-white rounded-2xl shadow-xl p-8 border border-purple-100">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
-            {mode === 'login' ? 'Welcome Back' : 'Reset Password'}
+            {mode === 'login' ? 'Bem-vindo de volta' : 'Redefinir Senha'}
           </h1>
           <p className="text-gray-600">
             {mode === 'login'
-              ? 'Sign in to your Budget Planner account'
-              : 'Enter your email to receive a password reset link'}
+              ? 'Faça login em sua conta Budgeteer'
+              : 'Digite seu email para receber um link de redefinição de senha'}
           </p>
         </div>
 
@@ -67,7 +67,7 @@ export default function LoginForm({ onToggleMode }: LoginFormProps) {
 
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-              Email Address
+              Endereço de Email
             </label>
             <input
               id="email"
@@ -76,14 +76,14 @@ export default function LoginForm({ onToggleMode }: LoginFormProps) {
               onChange={(e) => setEmail(e.target.value)}
               required
               className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent transition-all duration-200"
-              placeholder="Enter your email"
+              placeholder="Digite seu email"
             />
           </div>
 
           {mode === 'login' && (
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
-                Password
+                Senha
               </label>
               <input
                 id="password"
@@ -92,7 +92,7 @@ export default function LoginForm({ onToggleMode }: LoginFormProps) {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300 focus:border-transparent transition-all duration-200"
-                placeholder="Enter your password"
+                placeholder="Digite sua senha"
               />
             </div>
           )}
@@ -105,7 +105,7 @@ export default function LoginForm({ onToggleMode }: LoginFormProps) {
             {loading ? (
               <div className="flex items-center justify-center">
                 <i className="ri-loader-4-line animate-spin mr-2"></i>
-                {mode === 'login' ? 'Signing In...' : 'Sending...'}
+                {mode === 'login' ? 'Entrando...' : 'Enviando...'}
               </div>
             ) : (
               mode === 'login' ? 'Sign In' : 'Send Reset Link'
@@ -120,7 +120,7 @@ export default function LoginForm({ onToggleMode }: LoginFormProps) {
                 onClick={() => { setMode('forgot'); setError(''); setResetMessage(''); }}
                 className="text-purple-600 hover:text-purple-700 font-medium transition-colors duration-200 mb-2"
               >
-                Forgot Password?
+                Esqueceu sua senha?
               </button>
               <p className="text-gray-600">
                 Don't have an account?{' '}
@@ -128,7 +128,7 @@ export default function LoginForm({ onToggleMode }: LoginFormProps) {
                   onClick={onToggleMode}
                   className="text-purple-600 hover:text-purple-700 font-medium transition-colors duration-200"
                 >
-                  Sign up here
+                  Cadastre-se aqui
                 </button>
               </p>
             </>
@@ -138,7 +138,7 @@ export default function LoginForm({ onToggleMode }: LoginFormProps) {
                 onClick={() => { setMode('login'); setError(''); setResetMessage(''); }}
                 className="text-purple-600 hover:text-purple-700 font-medium transition-colors duration-200 mb-2"
               >
-                Back to Sign In
+                Voltar para o Login
               </button>
             </>
           )}

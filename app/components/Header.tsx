@@ -8,6 +8,7 @@ interface Tab {
   id: string;
   label: string;
   icon: string;
+  path?: string; // Added path property
 }
 
 interface HeaderProps {
@@ -33,23 +34,38 @@ export default function Header({ activeTab, setActiveTab, tabs, selectedMonth, s
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-8">
             <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-              Budget Planner
+              Budgeteer
             </h1>
             
             <nav className="hidden md:flex space-x-1">
               {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 flex items-center space-x-2 ${
-                    activeTab === tab.id
-                      ? 'bg-purple-100 text-purple-700 shadow-sm'
-                      : 'text-gray-600 hover:text-purple-600 hover:bg-purple-50'
-                  }`}
-                >
-                  <i className={`${tab.icon} text-sm`}></i>
-                  <span>{tab.label}</span>
-                </button>
+                tab.path ? (
+                  <Link
+                    key={tab.id}
+                    href={tab.path}
+                    className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 flex items-center space-x-2 ${
+                      activeTab === tab.id || (typeof window !== 'undefined' && window.location.pathname === tab.path)
+                        ? 'bg-purple-100 text-purple-700 shadow-sm'
+                        : 'text-gray-600 hover:text-purple-600 hover:bg-purple-50'
+                    }`}
+                  >
+                    <i className={`${tab.icon} text-sm`}></i>
+                    <span>{tab.label}</span>
+                  </Link>
+                ) : (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveTab(tab.id)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 flex items-center space-x-2 ${
+                      activeTab === tab.id
+                        ? 'bg-purple-100 text-purple-700 shadow-sm'
+                        : 'text-gray-600 hover:text-purple-600 hover:bg-purple-50'
+                    }`}
+                  >
+                    <i className={`${tab.icon} text-sm`}></i>
+                    <span>{tab.label}</span>
+                  </button>
+                )
               ))}
             </nav>
           </div>
@@ -61,7 +77,7 @@ export default function Header({ activeTab, setActiveTab, tabs, selectedMonth, s
               value={selectedMonth}
               onChange={(e) => setSelectedMonth(e.target.value)}
               className="text-sm border border-gray-200 rounded-lg px-3 py-1 focus:outline-none focus:ring-2 focus:ring-purple-300"
-              aria-label="Select month"
+              aria-label="Selecione o mês"
             />
           </div>
           
@@ -72,7 +88,7 @@ export default function Header({ activeTab, setActiveTab, tabs, selectedMonth, s
               className="text-sm text-gray-600 hover:text-purple-600 transition-colors duration-200 flex items-center space-x-1"
             >
               <i className="ri-logout-box-r-line"></i>
-              <span>Sign Out</span>
+              <span>Sair</span>
             </button>
           </div>
         </div>
