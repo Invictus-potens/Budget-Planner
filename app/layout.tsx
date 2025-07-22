@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Pacifico } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "./contexts/AuthContext";
+import { useSettingsStore } from "../store/settingsStore";
+import React from "react";
 
 const pacifico = Pacifico({
   weight: '400',
@@ -25,15 +27,23 @@ export const metadata: Metadata = {
   description: "A simple budget planning application",
 };
 
+function ThemedHtml({ children }: { children: React.ReactNode }) {
+  const darkTheme = useSettingsStore((s) => s.darkTheme);
+  const locale = 'pt-BR';
+  return (
+    <html lang={locale} suppressHydrationWarning={true} className={darkTheme ? 'dark' : ''}>
+      {children}
+    </html>
+  );
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Use 'pt-BR' como idioma padrão
-  const locale = 'pt-BR';
   return (
-    <html lang={locale} suppressHydrationWarning={true}>
+    <ThemedHtml>
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${pacifico.variable} antialiased`}
       >
@@ -41,6 +51,6 @@ export default function RootLayout({
           {children}
         </AuthProvider>
       </body>
-    </html>
+    </ThemedHtml>
   );
 }

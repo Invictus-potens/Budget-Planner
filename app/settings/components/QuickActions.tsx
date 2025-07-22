@@ -12,7 +12,7 @@ export function QuickActions() {
   }
 
   return (
-    <Card className="gap-3">
+    <Card className="gap-3" id="quickactions-card">
       <h2 className="text-lg font-semibold text-green flex items-center gap-2 mb-2">
         <span className="text-green text-2xl">⚡</span> Ações Rápidas
       </h2>

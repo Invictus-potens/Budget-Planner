@@ -2,7 +2,7 @@ import { Card } from './Card';
 
 export function CustomCategories() {
   return (
-    <Card>
+    <Card id="customcategories-card">
       <div className="flex items-center gap-2 mb-2">
         <span className="text-orange text-2xl">🏷️</span>
         <h2 className="text-lg font-semibold text-grayDark">Categorias Personalizadas</h2>

@@ -2,8 +2,8 @@ import { Card } from './Card';
 
 export function SidebarInfo() {
   return (
-    <div className="flex flex-col gap-4">
-      <Card>
+    <div className="flex flex-col gap-4" id="sidebarinfo-root">
+      <Card id="sidebarinfo-stats-card">
         <h2 className="text-lg font-semibold text-grayDark mb-2">Estatísticas</h2>
         <div className="flex flex-col gap-1">
           <div className="flex justify-between"><span>Usuários:</span> <span className="text-blue font-bold">0</span></div>
@@ -14,7 +14,7 @@ export function SidebarInfo() {
           <div className="flex justify-between"><span>Categorias:</span> <span className="text-grayDark font-bold">10</span></div>
         </div>
       </Card>
-      <Card className="bg-pastelPink">
+      <Card className="bg-pastelPink" id="sidebarinfo-tips-card">
         <h2 className="text-lg font-semibold text-magenta mb-2">Dicas de Lembretes</h2>
         <ul className="list-disc pl-5 text-grayMedium">
           <li><span className="text-green">•</span> Defina lembretes para vencimento de contas importantes</li>

@@ -2,7 +2,7 @@ import { Card } from './Card';
 
 export function RegisteredSalaries() {
   return (
-    <Card>
+    <Card id="registeredsalaries-card">
       <div className="flex items-center gap-2 mb-2">
         <span className="text-green text-2xl">💵</span>
         <h2 className="text-lg font-semibold text-grayDark">Salários Cadastrados</h2>

@@ -68,7 +68,7 @@ export function FinancialSettings() {
   };
 
   return (
-    <Card>
+    <Card id="financialsettings-card">
       <div className="flex items-center gap-2 mb-2">
         <span className="text-pink-500 text-2xl">💸</span>
         <h2 className="text-lg font-semibold text-gray-800">Configurações Financeiras</h2>

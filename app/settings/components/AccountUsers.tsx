@@ -55,7 +55,7 @@ export function AccountUsers({ groupId, isOwner }: AccountUsersProps) {
   };
 
   return (
-    <Card>
+    <Card id="accountusers-card">
       <div className="flex items-center gap-2 mb-2">
         <span className="text-gray-700 text-2xl">👤</span>
         <h2 className="text-lg font-semibold text-gray-800">Usuários do Sistema</h2>
