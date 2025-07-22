@@ -23,26 +23,16 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-function ThemedHtml({ children }: { children: React.ReactNode }) {
-  const darkTheme = useSettingsStore((s) => s.darkTheme);
-  const locale = 'pt-BR';
-  return (
-    <html lang={locale} suppressHydrationWarning={true} className={darkTheme ? 'dark' : ''}>
-      {children}
-    </html>
-  );
-}
-
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
+  const darkTheme = useSettingsStore((s) => s.darkTheme);
   return (
-    <ThemedHtml>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${pacifico.variable} antialiased`}
-      >
-        <AuthProvider>
-          {children}
-        </AuthProvider>
-      </body>
-    </ThemedHtml>
+    <body
+      className={`${geistSans.variable} ${geistMono.variable} ${pacifico.variable} antialiased${darkTheme ? " dark" : ""}`}
+      suppressHydrationWarning={true}
+    >
+      <AuthProvider>
+        {children}
+      </AuthProvider>
+    </body>
   );
 } 
